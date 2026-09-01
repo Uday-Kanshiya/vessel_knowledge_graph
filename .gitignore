@@ -1,0 +1,38 @@
+# Secrets — never commit. Templates (.env.example, *.example) stay tracked.
+.env
+.env.*
+!.env.example
+k8s/secret.yaml
+k8s/**/secret.yaml
+*.key
+*.pem
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Local runtime
+logs/
+*.log
+tmp/
+temp/
+.cache/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
