@@ -1,0 +1,51 @@
+
+//attachment  excel(excel reader ,read raw text adn pass it to llm), word and pdf(if it is less than 15 pages convert each pages to images and pass it to llm), image
+
+// collection name : vessel_issues_mail_attachemnts
+
+{
+  "_id": objectId("66e6e6e6e6e6e6e6e6e6e6e8"),
+  "mailbodyId": objectId("66e6e6e6e6e6e6e6e6e6e6e6"),
+  "casefileId": objectId("66e6e6e6e6e6e6e6e6e6e6e7"),
+  "attachment_name": "attachment.pdf",
+  "attachment_url": "https://example.com/attachment.pdf",
+  "attachment_type": "application/pdf",
+  "summary": "summary of the attachment",
+  "tags":["tag1", "tag2", "tag3"],
+  "equeipment":"description maker model of any equipment it talks about"
+}
+
+
+
+// incidnet report json schema:
+
+// collection name : vessel_issues_incident_reports
+
+
+{
+    "_id": objectId("66e6e6e6e6e6e6e6e6e6e6e9"),
+    "casefileId": objectId("66e6e6e6e6e6e6e6e6e6e6e7"),
+    "symptoms":["symptom1", "symptom2", "symptom3"],
+    "equipments":["equipment1", "equipment2", "equipment3"],
+    "problems":["problem1", "problem2", "problem3"],
+    "actions":[
+        {
+            "action_name": "action1",
+            "action_description": "description of the action",
+             "related_problems and equipment and symptoms" ---> structre will be decided by shreyasi,
+             "result of the action": "result of the action",
+             "result_status":"success or failure or partial",
+             "reference": [mailbodyid1, mailbodyid2, mailbodyid3]
+        },
+        {
+            "action_name": "action2",
+            "action_description": "description of the action",
+            "related_problems and equipment and symptoms" ---> structre will be decided by shreyasi,
+            "result_status":"success or failure or partial",
+             "reference": [mailbodyid7, mailbodyid8]
+        }
+        // and so on for all actions
+    ],
+    "casefile_log":" log of the casefile you guys are going to build"
+
+}
