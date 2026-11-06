@@ -1,0 +1,48 @@
+phrase,canonical,notes
+# Verb-phrase canonicalisation of a symptom CORE (docs/13 §8, P1b): HOW the failure is said, folded to one
+# form so "could not start" / "fails to start" / "failed to start" are one standard. Applied after the
+# where / when extraction and before the key: longest-first, whole-word, on lemmatised tokens (the rows are
+# lemmatised at load the same way, so "failed to start" and "fail to start" are the same row). Explicit
+# only: a form not listed stays as written and is reported as residue. Apostrophes are dropped by the
+# tokeniser, so "couldn't" is written "couldn t". A phrase that maps to itself is a guard anchor only.
+could not start,fail to start,modality
+couldn t start,fail to start,modality
+cannot start,fail to start,modality
+can not start,fail to start,modality
+unable to start,fail to start,modality
+would not start,fail to start,modality
+won t start,fail to start,modality
+does not start,fail to start,modality
+did not start,fail to start,modality
+not starting,fail to start,modality
+no start,fail to start,modality
+failed to start,fail to start,verb_form
+fails to start,fail to start,verb_form
+failing to start,fail to start,verb_form
+failure to start,fail to start,verb_form
+not activating,fail to activate,modality
+not activate,fail to activate,modality
+did not activate,fail to activate,modality
+does not activate,fail to activate,modality
+failed to activate,fail to activate,verb_form
+fails to activate,fail to activate,verb_form
+not operating,fail to operate,modality
+not operate,fail to operate,modality
+inoperative,fail to operate,modality
+does not operate,fail to operate,modality
+did not operate,fail to operate,modality
+not working,fail to operate,modality
+not closing,fail to close,modality
+does not close,fail to close,modality
+not opening,fail to open,modality
+does not open,fail to open,modality
+could not,fail to,modality
+couldn t,fail to,modality
+unable to,fail to,modality
+would not,fail to,modality
+failed to,fail to,verb_form
+fails to,fail to,verb_form
+failing to,fail to,verb_form
+shut down,stop,verb_form (stop and trip stay apart: stops_or_shutdown vs alarm_or_trip)
+stopped,stop,verb_form
+tripped,trip,verb_form

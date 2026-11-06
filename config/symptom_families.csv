@@ -1,0 +1,26 @@
+key,display,description,patterns,sort_order
+# PROPOSAL (2026-10-21): a starting list of ~20 symptom families for the Symptom facet (docs/13 §8).
+# Edit freely: key is the stable id the index and URLs carry; display is what the facet shows;
+# patterns are '|'-separated case-insensitive substrings matched on the normalised symptom key,
+# the FIRST family in sort_order whose pattern matches wins (only when no human/seed/inherited family).
+# Families are never minted by rules: this file is the only way one comes into being.
+water_ingress,Water ingress,"Flooding, seawater or water where it should not be",flood|ingress|water in|seawater|sea water|bilge high|water inside,1
+smoke_or_exhaust,Smoke / exhaust,"Smoke, sparks, soot, abnormal exhaust",smoke|exhaust gas|spark|soot|black exhaust,2
+leakage,Leakage,"Oil, fuel, water, gas or air escaping",leak|seep|weep|drip|spill,3
+fails_to_start,Fails to start,"Will not start or starts with difficulty",fail to start|fails to start|failed to start|not start|won t start|no start|cannot start|unable to start|hard start|failure to start,4
+stops_or_shutdown,Stops / shutdown,"Stopped, stalled, blacked out, shut down (not a protective trip)",stop|stall|blackout|black out|shut down|shutdown,5
+alarm_or_trip,Alarm / trip,"An alarm, trip, slowdown or protective cut-out",alarm|trip|slowdown|slow down|cut out|cut-out|tripped,6
+vibration,Vibration,"Vibration, shaking, juddering",vibrat|shak|judder|oscillat,7
+abnormal_noise,Abnormal noise,"Knocking, rattling, grinding, squealing",noise|knock|sound|rattl|bang|squeal|whistl|grind,8
+high_temperature,High temperature,"Overheating or temperature above normal",high temp|overheat|too hot|temperature high|temp high|running hot,9
+low_pressure,Low pressure,"Pressure below normal or lost",low press|pressure low|pressure drop|loss of pressure|no pressure,10
+high_pressure,High pressure,"Pressure above normal",high press|pressure high|over press|overpress,11
+electrical_fault,Electrical fault,"Short circuit, earth fault, supply, breaker, wiring",electric|short circuit|earth fault|insulation|breaker|fuse|voltage|current|power supply|wiring,12
+control_or_sensor_fault,Control / sensor fault,"Wrong or missing reading, sensor, detector, controller, software",sensor|detector|transmitter|indication|reading|signal|controller|plc|software|fault code|photodiode|not activating|not operating|not responding|erratic,13
+blockage,Blockage,"Blocked, clogged, choked, restricted flow",block|clog|chok|restrict|plugged,14
+contamination,Contamination,"Sludge, deposits, dirt, fouling, foreign matter",contaminat|sludge|deposit|carbon|dirt|foul|water in oil|metal particle,15
+corrosion,Corrosion,"Corrosion, rust, wastage",corros|rust|wastage|wasted,16
+wear_or_damage,Wear / damage,"Wear, cracks, fractures, scoring, breakage, deformation",wear|worn|crack|fractur|broke|damag|dent|hole|scor|bent|deform|chipped|erod|pitting|torn|seiz|clearance,17
+fuel_or_lube_quality,Fuel / lube quality,"Off-spec fuel or lubricant",fuel quality|lube oil quality|viscosity|cat fine|off spec|off-spec|tbn|flash point|bunker quality,18
+excessive_consumption,Excessive consumption,"Higher than normal use of fuel, oil or water",consumption|high usage|excessive use,19
+performance_loss,Performance loss,"Cannot reach load or speed, hunting, erratic running, reduced output",load limit|loss of power|power loss|low rpm|rpm drop|unable to reach|not reaching|low output|hunting|fluctuat|fails|failure|not open|not closing|too slow|zero,20

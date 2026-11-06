@@ -1,0 +1,112 @@
+{
+  "bar": 0.72,
+  "families_scanned": [
+    "alarm_or_trip",
+    "fails_to_start",
+    "performance_loss",
+    "smoke_or_exhaust",
+    "stops_or_shutdown",
+    "unclassified",
+    "wear_or_damage"
+  ],
+  "pairs": [
+    {
+      "family": "alarm_or_trip",
+      "a": {
+        "standard_id": 81,
+        "key": "lo high/low alarm not activating",
+        "display": "Lo high/low alarm not activating",
+        "family": "alarm_or_trip",
+        "spellings": [
+          {
+            "raw": "LO sump high/low alarm not activating",
+            "hits": 1,
+            "source": "casefile:6a311cbc20960ff945871f60"
+          }
+        ],
+        "pending": false
+      },
+      "b": {
+        "standard_id": 82,
+        "key": "lo level high/low alarm not activating",
+        "display": "Lo level high/low alarm not activating",
+        "family": "alarm_or_trip",
+        "spellings": [
+          {
+            "raw": "LO sump level HIGH/LOW alarm not activating",
+            "hits": 2,
+            "source": "casefile:6a311cbc20960ff945871f60"
+          }
+        ],
+        "pending": false
+      },
+      "score": 0.957,
+      "diff": [
+        {
+          "token": "level",
+          "side": "b",
+          "tag": "unknown"
+        }
+      ],
+      "verdict": "REVIEW",
+      "tables": []
+    },
+    {
+      "family": "alarm_or_trip",
+      "a": {
+        "standard_id": 54,
+        "key": "closing delay alarm",
+        "display": "closing delay alarm",
+        "family": "alarm_or_trip",
+        "spellings": [
+          {
+            "raw": "Exhaust valve closing delay alarm on cylinder No.5",
+            "hits": 1,
+            "source": "casefile:69c31dde585b6c770fc42db4"
+          }
+        ],
+        "pending": false
+      },
+      "b": {
+        "standard_id": 55,
+        "key": "closing too slow alarm",
+        "display": "closing too slow alarm",
+        "family": "alarm_or_trip",
+        "spellings": [
+          {
+            "raw": "Exhaust valve closing too slow alarm on cylinder No.5",
+            "hits": 1,
+            "source": "casefile:69c31dde585b6c770fc42db4"
+          }
+        ],
+        "pending": false
+      },
+      "score": 0.772,
+      "diff": [
+        {
+          "token": "delay",
+          "side": "a",
+          "tag": "unknown"
+        },
+        {
+          "token": "too",
+          "side": "b",
+          "tag": "unknown"
+        },
+        {
+          "token": "slow",
+          "side": "b",
+          "tag": "unknown"
+        }
+      ],
+      "verdict": "REVIEW",
+      "tables": []
+    }
+  ],
+  "pending_pairs": [],
+  "counts": {
+    "MERGE-BY-TABLE": 0,
+    "REVIEW": 2,
+    "KEEP": 0
+  }
+}

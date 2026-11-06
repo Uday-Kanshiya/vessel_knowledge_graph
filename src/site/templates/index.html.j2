@@ -1,0 +1,22 @@
+{% extends "base.html.j2" %}
+{% block title %}Search · Casefile browser{% endblock %}
+{% block content %}
+<h1>Search casefiles</h1>
+<p class="muted small">By what went wrong, on what, and what was done about it.</p>
+{% if not canonical_facets %}<div class="banner warn">canonical facets unavailable — run <code>scripts/build_lookup.py</code> (showing raw symptom wordings instead)</div>{% endif %}
+<div class="searchbox">
+  <input id="q" type="search" placeholder="e.g. exhaust valve knocking, OMD sensor, bellows, crane wire…" autofocus autocomplete="off">
+</div>
+<div class="layout">
+  <aside class="facets" id="facets"></aside>
+  <main>
+    <div class="active-filters" id="active"></div>
+    <div class="results-meta"><span id="count"></span><span id="sortnote" class="muted"></span></div>
+    <div id="results"></div>
+  </main>
+</div>
+{% endblock %}
+{% block scripts %}
+<script id="idx" type="application/json">{{ index_json | safe }}</script>
+<script src="{{ root }}assets/app.js"></script>
+{% endblock %}

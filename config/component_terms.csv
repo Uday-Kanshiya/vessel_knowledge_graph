@@ -1,0 +1,47 @@
+term,canonical_part_key
+# Component nouns a symptom wording can name (docs/13 §8, A1): the part the failure mode sits ON.
+# Matched longest-first, whole-word, case-insensitive, on lemmatised tokens, by normalize.decompose_symptom;
+# the match leaves the symptom key and is resolved as kind="part" so it shares one standard id with
+# action_logs[].parts[]. canonical_part_key = normalize(term).key of that part (blank = computed);
+# a synonym may point at another term's key. Seeded 2026-10-25 from the part standards in the store plus
+# the terms the 10-record corpus names. Grow it from the residue report (build_lookup.py --review).
+exhaust valve,exhaust valve
+exhaust valve sensor,exhaust valve sensor
+exhaust valve stroke sensor,exhaust valve stroke sensor
+exhaust bellows,exhaust bellow
+expansion bellows,expansion bellow
+exhaust expansion bellows,exhaust expansion bellow
+bellows,bellow
+cylinder head,cylinder head
+cylinder liner,cylinder liner
+water jacket,water jacket
+idle gear,idle gear
+gear bearing,gear bearing
+bearing,bearing
+fuel pump,fuel pump
+fuel plunger,fuel plunger
+piston ring,piston ring
+piston crown,piston crown
+piston,piston
+liner,liner
+guillotine bar,guillotine bar
+discharge valve,discharge valve
+blow-off valve,blow off valve
+solenoid valve,solenoid valve
+proportional valve,proportional valve
+non return valve,non return valve
+safety valve,safety valve
+cover plate,cover plate
+bolt,bolt
+spring,spring
+casing,casing
+pump,pump
+sensor,sensor
+position sensor,position sensor
+stroke sensor,stroke sensor
+relay,relay
+actuator,actuator
+oil mist detector,oil mist detector
+o ring,o ring
+ventilation fan,ventilation fan
+solenoid blow-off valve,solenoid blow off valve

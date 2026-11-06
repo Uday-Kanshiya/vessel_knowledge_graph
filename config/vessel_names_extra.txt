@@ -1,0 +1,4 @@
+# HAND-MAINTAINED fleet names the generated list (vessel_names.txt) cannot know: vessels with no casefile
+# in the export that are still named inside equipment labels (sister ships). One name per line. Merged with
+# vessel_names.txt by normalize.load_config; same role: a stopword list for the resolver (docs/13 §3).
+PACIFIC GARNET

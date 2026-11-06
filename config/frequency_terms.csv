@@ -1,0 +1,18 @@
+term,canonical
+# HOW OFTEN a symptom shows (docs/13 §8, P1b): extracted from the core like a location, kept on the alias
+# row (alias.parts.frequency). Matched longest-first on lemmatised tokens ("sometimes" lemmatises to
+# "sometime"; the rows are lemmatised the same way at load).
+sometimes,intermittent
+intermittently,intermittent
+intermittent,intermittent
+occasionally,intermittent
+at times,intermittent
+from time to time,intermittent
+now and then,intermittent
+always,persistent
+every time,persistent
+continuously,persistent
+constantly,persistent
+persistently,persistent
+once,single
+one time,single

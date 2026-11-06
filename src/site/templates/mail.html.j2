@@ -1,0 +1,26 @@
+{% extends "base.html.j2" %}
+{% block title %}Mail · {{ headers.get('Subject', mail_id) }}{% endblock %}
+{% block content %}
+<p class="small muted"><a href="{{ root }}index.html">Search</a> › {% for c in casefiles %}<a href="{{ root }}casefile/{{ c.id }}.html">{{ c.vessel }} · {{ c.title | truncate(60) }}</a>{{ ' · ' if not loop.last }}{% endfor %}</p>
+<h1>{{ headers.get('Subject') or 'Mail ' ~ mail_id }}</h1>
+<div class="mail-head muted">
+  {% if headers.get('From') %}<div><strong>From</strong> {{ headers['From'] }}</div>{% endif %}
+  {% if headers.get('To') %}<div><strong>To</strong> {{ headers['To'] }}</div>{% endif %}
+  {% if headers.get('CC') %}<div><strong>CC</strong> {{ headers['CC'] }}</div>{% endif %}
+  {% if headers.get('Date') %}<div><strong>Date</strong> {{ headers['Date'] }}</div>{% endif %}
+  <div><strong>mail_id</strong> <code>{{ mail_id }}</code>{% if url %} · <a href="{{ url }}" rel="noopener">source ↗</a>{% endif %}{% if fetched_at %} · fetched {{ fetched_at | fmt_date(true) }}{% endif %} · quotes stripped, as the validator read it</div>
+</div>
+<div class="two" style="margin-top:1rem">
+  <div class="mail-body">{{ body_html | safe }}</div>
+  <aside>
+    <div class="panel">
+      <h3 style="margin-top:0">Cited by</h3>
+      {% for c in cites %}
+        <div class="cite" id="{{ c.side_id }}">{% if c.row_anchor %}<span id="q-{{ c.row_id }}"></span>{% endif %}<span class="idtag"><a href="{{ root }}casefile/{{ c.casefile_id }}.html#{{ c.row_id }}">{{ c.row_id }}</a></span> <span class="what">{{ c.kind }}{% if c.family %} · {{ c.family | replace('_', ' ') | replace('action logs', 'action') }}{% endif %}</span>
+          <div class="small">“{% if c.found %}<a href="#{{ c.anchor }}">{{ c.quote | truncate(120) }}</a>{% else %}{{ c.quote | truncate(120) }}{% endif %}”{% if not c.found %} <span class="chip none" title="not verbatim in this body — the validator may have found it in an attachment of this mail, or it is a translation">not in body</span>{% endif %}</div></div>
+      {% else %}<p class="muted small">No record row cites this mail.</p>{% endfor %}
+      {% if n_quotes_missing %}<p class="small muted">{{ n_quotes_missing }} quote{{ 's' if n_quotes_missing != 1 }} not located verbatim in this body — usually a quote from an attachment of this mail, or a translated quote.</p>{% endif %}
+    </div>
+  </aside>
+</div>
+{% endblock %}

@@ -25,10 +25,13 @@ venv/
 htmlcov/
 
 # Local runtime
+# extraction run store (mail cache, digests, records) — rebuildable from export + network
+data/
 logs/
 *.log
 tmp/
 temp/
+reports/                         # diff_lookup.py --md output (docs/13 §6)
 .cache/
 
 # OS / editor

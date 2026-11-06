@@ -1,0 +1,66 @@
+{% extends "base.html.j2" %}
+{% block title %}Review queue · admin{% endblock %}
+{% block bodyattrs %} data-force-admin="1"{% endblock %}
+{% block content %}
+<h1>Review queue</h1>
+<p class="muted small">Every <code>validation_flags[]</code> entry across {{ n_casefiles }} records, grouped by kind. {{ n_review }} record{{ 's' if n_review != 1 }} carry <code>needs_review</code>. Each flag links to the row it belongs to and to that casefile's build journey.</p>
+
+<div class="panel">
+<table class="tbl">
+  <thead><tr><th>Casefile</th><th class="n">faults</th><th class="n">actions</th><th>flags</th><th>status</th><th></th></tr></thead>
+  <tbody>
+  {% for r in rows %}
+    <tr><td><a href="{{ root }}casefile/{{ r.id }}.html">{{ r.vessel }} · {{ r.title | truncate(50) }}</a></td>
+      <td class="n">{{ r.n_faults }}</td><td class="n">{{ r.n_actions }}</td>
+      <td>{% for f in r.flags %}<span class="chip flag" title="{{ f.raw }}">{{ f.kind }}</span>{% else %}<span class="muted small">—</span>{% endfor %}</td>
+      <td>{% if r.needs_review %}<span class="chip warn">needs review</span>{% else %}<span class="chip good">clean</span>{% endif %}{% if not r.complete %} <span class="chip bad">incomplete</span>{% endif %}</td>
+      <td class="small"><a href="{{ root }}admin/journey/{{ r.id }}.html">journey</a></td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<h2>Flags by kind</h2>
+{% for kind, items in by_kind %}
+<div class="panel" style="margin-bottom:.8rem">
+  <h3 style="margin-top:0"><code>{{ kind }}</code> <span class="muted small">× {{ items | length }}</span> <span class="muted small">— {{ flag_help.get(kind, '') }}</span></h3>
+  <table class="tbl"><tbody>
+  {% for it in items %}
+    <tr><td class="nowrap"><a href="{{ root }}casefile/{{ it.casefile_id }}.html">{{ it.vessel }}</a></td>
+      <td>{% if it.row_id %}<span class="idtag"><a href="{{ root }}casefile/{{ it.casefile_id }}.html#{{ it.row_id }}">{{ it.row_id }}{% if it.field %}.{{ it.field }}{% endif %}</a></span> {{ it.label | truncate(110) }}{% else %}<span class="muted">record-level</span>{% endif %}</td>
+      <td class="small mono muted">{{ it.extra or '' }}</td>
+      <td class="small"><a href="{{ root }}admin/journey/{{ it.casefile_id }}.html{% if it.row_id %}#lin-{{ it.row_id }}{% endif %}">lineage</a></td></tr>
+  {% endfor %}
+  </tbody></table>
+</div>
+{% else %}<p class="muted">No flags anywhere. </p>{% endfor %}
+
+{% if resolver %}
+<h2>Resolver queue — queued, not minted</h2>
+<p class="muted small">The resolver's third queue (docs/13 §4-§5). The first two (auto-minted standards, symptoms without a family) are on the <a href="{{ root }}admin/lookup.html">lookup page</a>.</p>
+<div class="panel">
+{% include "_pending_queue.html.j2" %}
+</div>
+
+<h2>Possible duplicates — symptom standards that read alike</h2>
+{% set dup = resolver.duplicates %}
+<p class="muted small">Review queue 4 (docs/13 §8): inside each family, pairs of standard cores scoring ≥ {{ dup.bar }} on the lexical stand-in, every differing word tagged by the table that would explain it. <span class="chip warn">MERGE-BY-TABLE</span> = add the named table row and rebuild; <span class="chip flag">REVIEW</span> = a word no table explains; <span class="chip good">KEEP</span> = different failure modes (near-synonyms stay apart). Nothing merges from here. Counts: {{ dup.counts['MERGE-BY-TABLE'] }} merge-by-table · {{ dup.counts.REVIEW }} review · {{ dup.counts.KEEP }} keep · {{ dup.pending_pairs | length }} pending-vs-standard.</p>
+<div class="panel">
+<table class="tbl duplicates">
+  <thead><tr><th>verdict</th><th>family</th><th>A</th><th>B</th><th class="n">score</th><th>differing words</th></tr></thead>
+  <tbody>
+  {% for p in dup.pairs + dup.pending_pairs %}
+    <tr class="duplicate" data-verdict="{{ p.verdict }}">
+      <td><span class="chip {{ 'warn' if p.verdict == 'MERGE-BY-TABLE' else ('flag' if p.verdict == 'REVIEW' else 'good') }}">{{ p.verdict }}</span>{% if p.tables %}<br><span class="small muted mono">{{ p.tables | join(', ') }}</span>{% endif %}</td>
+      <td class="small">{{ 'pending vs standard' if p.a.pending else p.family }}</td>
+      <td><strong>{{ p.a.key }}</strong>{% if p.a.standard_id %} <span class="muted small mono">#{{ p.a.standard_id }}</span>{% endif %}<br><span class="small muted">{% for s in p.a.spellings %}{{ s.raw }} ({{ s.hits }}){{ ' | ' if not loop.last }}{% endfor %}</span></td>
+      <td><strong>{{ p.b.key }}</strong>{% if p.b.standard_id %} <span class="muted small mono">#{{ p.b.standard_id }}</span>{% endif %}<br><span class="small muted">{% for s in p.b.spellings %}{{ s.raw }} ({{ s.hits }}){{ ' | ' if not loop.last }}{% endfor %}</span></td>
+      <td class="n">{{ p.score }}</td>
+      <td class="small mono">{% for d in p.diff %}{{ d.side }}:{{ d.token }}=<span class="{{ 'bad' if d.tag == 'unknown' else '' }}">{{ d.tag }}</span>{{ ', ' if not loop.last }}{% else %}<span class="muted">(identical cores)</span>{% endfor %}</td>
+    </tr>
+  {% else %}<tr><td class="muted" colspan="6">no pair reads alike</td></tr>{% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+{% endblock %}

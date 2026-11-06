@@ -1,0 +1,18 @@
+equipment_type,head_noun
+# The bare, unqualified head noun of an equipment_type (docs/13 §8, P1b): "engine" in "Engine sometimes
+# fails to start" on a main_engine record is the equipment, not part of the failure mode. normalize.
+# equipment_forms() reads it; decompose_symptom strips it ONLY when no component or location term has
+# already claimed the word ("engine room" is a location; "engine" stays in it). Explicit rows only — the
+# last word of a type is not a head noun by default ("scr_system" is not "system").
+main_engine,engine
+auxiliary_engine,engine
+diesel_generator,generator
+generator,generator
+air_compressor,compressor
+compressor,compressor
+storage_tank,tank
+boiler,boiler
+purifier,purifier
+crane,crane
+turbocharger,turbocharger
+pump,pump

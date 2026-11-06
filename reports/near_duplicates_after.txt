@@ -1,0 +1,8 @@
+possible duplicates (lexical >= 0.72; verdicts: MERGE-BY-TABLE / REVIEW / KEEP)
+  families scanned: alarm_or_trip, performance_loss, smoke_or_exhaust, stops_or_shutdown, unclassified, wear_or_damage
+  pairs: {'MERGE-BY-TABLE': 0, 'REVIEW': 1, 'KEEP': 0}
+
+[REVIEW]  alarm_or_trip  score 0.772
+    A #54 'closing delay alarm'  <- Exhaust valve closing delay alarm on cylinder No.5 (1, 0fc42db4)
+    B #55 'closing too slow alarm'  <- Exhaust valve closing too slow alarm on cylinder No.5 (1, 0fc42db4)
+    diff: a:delay=unknown, b:too=unknown, b:slow=unknown

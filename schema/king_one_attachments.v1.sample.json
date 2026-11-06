@@ -1,0 +1,579 @@
+{
+  "_note": "SAMPLE: six of the 53 distinct KING ONE files, built from the v1 extract's digests. On a real run summary/maker/model come from the file bytes and text_ref points at the extracted text.",
+  "documents": [
+    {
+      "sha256": "5b937c51ef76bf6f77a658973e96418b566f168c66e1d0d32ec1baf72a90fabb",
+      "links": [
+        {
+          "mailbodyId": "69ad898f2ec5dad685b9fa1c",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPgCc70AAA=/“大金01”轮主机问题反馈.docx",
+          "attachment_name": "“大金01”轮主机问题反馈.docx"
+        }
+      ],
+      "content_bearing": true,
+      "kind_of_doc": "Defect report (C/E)",
+      "summary": "Chief Engineer's report (7 Mar 2026): at NCR 158 RPM the stbd ME No.6 and No.5 exhaust bellows cracked (smoke/sparks), speed cut to 136 RPM, bellows renewed at Sri Lanka; port ME cyl 2–4 jacket-water leaks; blames poor ME quality.",
+      "tags": [
+        "defect_report"
+      ],
+      "maker": "NA",
+      "model": "NA",
+      "equipment_details": "Starboard main engine No.5 and No.6 cylinder exhaust bellows (cracked at NCR 158 rpm, renewed at Sri Lanka); port main engine cylinders 2-4 cylinder-head jacket water seals (leaking)",
+      "extracted_text": null,
+      "text_ref": "attachments/text/5b937c51ef76bf6f77a658973e96418b566f168c66e1d0d32ec1baf72a90fabb.txt",
+      "extraction_method": "docx_text"
+    },
+    {
+      "sha256": "73da2fa2ee3a9a34213befaba9046ca5dd0f3d60a06073c66aa507c140d2b727",
+      "links": [
+        {
+          "mailbodyId": "6a6b5fc4abf82be165f102af",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARC6x_4AAA=/Service%20Report%2020260730.pdf",
+          "attachment_name": "Service Report 20260730.pdf"
+        },
+        {
+          "mailbodyId": "6a6b5fd0abf82be165f102bb",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARC6x_8AAA=/Service%20Report%2020260730.pdf",
+          "attachment_name": "Service Report 20260730.pdf"
+        },
+        {
+          "mailbodyId": "6a7b863b4d96a7cd9b2d4ba9",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARJUBUvAAA=/Service%20Report%2020260730.pdf",
+          "attachment_name": "Service Report 20260730.pdf"
+        },
+        {
+          "mailbodyId": "6a7b864c4d96a7cd9b2d4bb0",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARJUBUxAAA=/Service%20Report%2020260730.pdf",
+          "attachment_name": "Service Report 20260730.pdf"
+        }
+      ],
+      "content_bearing": true,
+      "kind_of_doc": "Service report",
+      "summary": "Japan Engine Corporation service report (30 Jul 2026, Suez anchorage, T.R.H. 3076 h): idle gear replaced after free-end bearing found severely worn and thrust collars broken; deflections, backlash and tooth contact checked; engine tested and sea trial satisfactory. Signed/stamped by vessel; includes time sheet.",
+      "tags": [
+        "service_report"
+      ],
+      "maker": "Japan Engine Corporation (J-ENG)",
+      "model": "6UEC35LSE-C1-LPSCR",
+      "equipment_details": "Starboard main engine idle (intermediate) gear — free-end bearing and broken thrust collars; camshaft/crankshaft gear backlash; order BB2624018600, running hours 3076",
+      "extracted_text": null,
+      "text_ref": "attachments/text/73da2fa2ee3a9a34213befaba9046ca5dd0f3d60a06073c66aa507c140d2b727.txt",
+      "extraction_method": "pdf_text"
+    },
+    {
+      "sha256": "ad59dc7aee56b5c9cd97d433b20405e4412b6a89a016dfbd44f21e3677d4d86e",
+      "links": [
+        {
+          "mailbodyId": "6a7b863b4d96a7cd9b2d4ba9",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARJUBUvAAA=/Master's%20SOF%2020260801.pdf",
+          "attachment_name": "Master's SOF 20260801.pdf"
+        },
+        {
+          "mailbodyId": "6a7b864c4d96a7cd9b2d4bb0",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARJUBUxAAA=/Master's%20SOF%2020260801.pdf",
+          "attachment_name": "Master's SOF 20260801.pdf"
+        }
+      ],
+      "content_bearing": true,
+      "kind_of_doc": "Statement of Facts (SOF)",
+      "summary": "Master's statement of facts (01 Aug 2026): alloy debris in ME auto lube-oil filter and crankcase led to finding idler-gear bearing bush spalling; spares on board 26 Jul, repair 29–30 Jul, satisfactory trial run, SCA arranged trial and canal transit on 31 Jul.",
+      "tags": [
+        "sof"
+      ],
+      "maker": "NA",
+      "model": "NA",
+      "equipment_details": "Starboard main engine — idler gear bearing bush and intermediate gearbox; ME automatic lube-oil self-cleaning filter",
+      "extracted_text": null,
+      "text_ref": "attachments/text/ad59dc7aee56b5c9cd97d433b20405e4412b6a89a016dfbd44f21e3677d4d86e.txt",
+      "extraction_method": "pdf_text"
+    },
+    {
+      "sha256": "05d927d0be882e7d81ee6ca4eac20f26139afc6282b81146b9f431a5049fdc57",
+      "links": [
+        {
+          "mailbodyId": "6a7b863b4d96a7cd9b2d4ba9",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARJUBUvAAA=/SOF%20of%202%20E%2020260801.pdf",
+          "attachment_name": "SOF of 2 E 20260801.pdf"
+        },
+        {
+          "mailbodyId": "6a7b864c4d96a7cd9b2d4bb0",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARJUBUxAAA=/SOF%20of%202%20E%2020260801.pdf",
+          "attachment_name": "SOF of 2 E 20260801.pdf"
+        }
+      ],
+      "content_bearing": true,
+      "kind_of_doc": "Statement of Facts (SOF)",
+      "summary": "Second Engineer's SOF: ME at 158 RPM from 19 Jul, falling lube-oil pressure, metallic debris in auto backwash filter at Suez; inspections found idle-gear bushing alloy exfoliation; spare gear on board 27 Jul, replaced 29–30 Jul, satisfactory test; transited canal 31 Jul to Tees.",
+      "tags": [
+        "sof"
+      ],
+      "maker": "NA",
+      "model": "NA",
+      "equipment_details": "Starboard main engine — idle gear bushing (alloy exfoliation); auto backwash lube-oil filter; No.1 crosshead, con-rod big end and main bearings inspected",
+      "extracted_text": null,
+      "text_ref": "attachments/text/05d927d0be882e7d81ee6ca4eac20f26139afc6282b81146b9f431a5049fdc57.txt",
+      "extraction_method": "pdf_text"
+    },
+    {
+      "sha256": "eeb39201a0c9c72a2b23737ad723dc2a7e6ffd34eb4f861a36902b2d15f75a3b",
+      "links": [
+        {
+          "mailbodyId": "6a7b863b4d96a7cd9b2d4ba9",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARJUBUvAAA=/SOF%20OF%20abnormal%20wear%20occurred%20on%20the%20idle%20gear%20bush%20of%20ME(S).pdf",
+          "attachment_name": "SOF OF abnormal wear occurred on the idle gear bush of ME(S).pdf"
+        },
+        {
+          "mailbodyId": "6a7b864c4d96a7cd9b2d4bb0",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAARJUBUxAAA=/SOF%20OF%20abnormal%20wear%20occurred%20on%20the%20idle%20gear%20bush%20of%20ME(S).pdf",
+          "attachment_name": "SOF OF abnormal wear occurred on the idle gear bush of ME(S).pdf"
+        }
+      ],
+      "content_bearing": true,
+      "kind_of_doc": "Statement of Facts (SOF)",
+      "summary": "Chief Engineer's SOF: alloy debris found 20 Jul at Suez; crosshead bearing No.1 OK; alloy spalling on intermediate idler gear bearing bush; transit cancelled; parts on board 26 Jul, manufacturer technicians replaced idler gear, completed 30 Jul 15:00, tests normal, transit 31 Jul.",
+      "tags": [
+        "sof"
+      ],
+      "maker": "NA",
+      "model": "NA",
+      "equipment_details": "Starboard main engine — intermediate gearbox idler gear bearing bush; No.1 cylinder crosshead bearing; lube-oil self-cleaning filter",
+      "extracted_text": null,
+      "text_ref": "attachments/text/eeb39201a0c9c72a2b23737ad723dc2a7e6ffd34eb4f861a36902b2d15f75a3b.txt",
+      "extraction_method": "pdf_text"
+    },
+    {
+      "sha256": "c18fcf2eea8d7ad5166208646415a5aa4ffd09fd37f946a03a22f7f1bb45ea94",
+      "links": [
+        {
+          "mailbodyId": "69a6aec03216b02d4fc7b58e",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPcVySYAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69a6b84f891508a5fb5cce34",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPcWAzjAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69a79745b9b7105564dab2e3",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPc1DyGAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69a8ef2d6ed4ecbb1f408b9f",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPdjg59AAA=/image002.png",
+          "attachment_name": "image002.png"
+        },
+        {
+          "mailbodyId": "69a93cbcb1d9852557460496",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPdkXkgAAA=/image002.png",
+          "attachment_name": "image002.png"
+        },
+        {
+          "mailbodyId": "69a9474b6359051c4839023d",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPdkXwUAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69aa46c43602d41204761ca1",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPeYbl9AAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69aa89e3be4a6308f8cab81c",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPeZBnvAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69ab865498d2ef36380d81a2",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPeaiIcAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69ae9f7e75eee9a143925890",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPgdfUxAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69aea8f5802da33e33894064",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPgdsJZAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69aed197fc46ebcbdcc04f74",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPgeFQ7AAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69aed197fc46ebcbdcc04f74",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPgeFQ7AAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69af6a769c8c4ee6a9b032f7",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg2TF_AAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69afeaecc7386aaa5b8be41a",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3bPJAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69afeaecc7386aaa5b8be41a",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3bPJAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69afeaecc7386aaa5b8be41a",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3bPJAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69aff824c5b780cacda85db1",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3krDAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69aff824c5b780cacda85db1",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3krDAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69aff824c5b780cacda85db1",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3krDAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69affe10b89aa290b1054909",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3p8sAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69affe10b89aa290b1054909",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3p8sAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69affe10b89aa290b1054909",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3p8sAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69affe10b89aa290b1054909",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPg3p8sAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b12d65bd30c89f2b7c0ad8",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhws_hAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b15aefd8711b7d4f56b866",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxLfmAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b15aefd8711b7d4f56b867",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxLoNAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b15b9b1067f3ba5ab2d1c0",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxLr_AAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b15b9b1067f3ba5ab2d1c0",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxLr_AAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b15b9b1067f3ba5ab2d1c0",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxLr_AAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b15b9b1067f3ba5ab2d1c0",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxLr_AAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b166e248fb13180a619c8a",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxQLaAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b166e248fb13180a619c8a",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxQLaAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b166e248fb13180a619c8a",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxQLaAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b166e248fb13180a619c8a",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxQLaAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b180069d5c331c2feb4cfe",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxaDRAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b180069d5c331c2feb4cfe",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxaDRAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b180069d5c331c2feb4cfe",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxaDRAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b180069d5c331c2feb4cfe",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxaDRAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b1ac759791eab8be9817d6",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxpaxAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b1ac759791eab8be9817d6",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxpaxAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b1ac759791eab8be9817d6",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxpaxAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b1ac759791eab8be9817d6",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPhxpaxAAA=/image.png",
+          "attachment_name": "image.png"
+        },
+        {
+          "mailbodyId": "69b2898edf5ce0c9e6124685",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPid5EWAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b2898edf5ce0c9e6124686",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPid5GxAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69b7ffb02fd81d842fdf4a2f",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPlNDqqAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69b8bffe91fedc1f9a118a8f",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPl27cLAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b91cd7e19f7c6af5873ff6",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPl4JYVAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69b9257c2c9cfecfd7e84daf",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPl4N8uAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69b92c59d349a298239a7026",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPl4SG_AAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69b957de5eaf4d8986a17582",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPl4pgHAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69bb8ae83607b0af5db05407",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPmhwKxAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69bbd0b70051dccddad8cd99",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPmifr1AAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c290e6858b911fd26457af",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPp70MbAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c2947f435c2d06633c5830",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPp737JAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69c298a3aa2e619aac552b17",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPp79iIAAA=/image007.png",
+          "attachment_name": "image007.png"
+        },
+        {
+          "mailbodyId": "69c33af3acecdcbf32af36a3",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrVOpNAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c33af3acecdcbf32af36a4",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrVOqDAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c380f978b6ee5ab6282ead",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrV4w1AAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c391b0b91995c0e4bbbd24",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrWJ0QAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c39806aa9c375be0886738",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrWJ4SAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c399a8639a2f1fc0290429",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrWRURAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c3a801dc4dab896907b6b5",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrWWxYAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c3a801dc4dab896907b6b6",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrWc6sAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c3bc3f1ba763763719fc9f",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPrWmsfAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69c4798239daeacf1c0d1aa2",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAPsJ9g-AAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69de3da6f2cc19dce5de2413",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAP4e4HlAAA=/image003.png",
+          "attachment_name": "image003.png"
+        },
+        {
+          "mailbodyId": "69ef0172589a27d87db34108",
+          "casefileId": "69a6965bf935cb9be885b8ee",
+          "attachment_url": "https://assets-prod.siya.com/Mail%20Attachment/AAMkADY3OWExMzVmLTY0YjUtNGNlNS04OGRjLTBkOTAwODAzNTk4YgBGAAAAAADZAF_6egoRSped2vcJwy1dBwD23IX_UWaWQKVJR2IfNVMZAAAAAAEMAAD23IX_UWaWQKVJR2IfNVMZAAQCEfNQAAA=/image003.png",
+          "attachment_name": "image003.png"
+        }
+      ],
+      "content_bearing": false,
+      "kind_of_doc": "Email signature / logo image",
+      "summary": null,
+      "tags": [],
+      "maker": "NA",
+      "model": "NA",
+      "equipment_details": "NA",
+      "extracted_text": null,
+      "text_ref": null,
+      "extraction_method": "skipped"
+    }
+  ]
+}

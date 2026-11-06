@@ -1,0 +1,34 @@
+{% extends "base.html.j2" %}
+{% block title %}Attachment · {{ name or sha[:12] }}{% endblock %}
+{% block content %}
+<p class="small muted"><a href="{{ root }}index.html">Search</a> › attachment</p>
+<h1>{{ name or 'Attachment ' ~ sha[:12] }}</h1>
+<div class="cf-meta">
+  <span class="chip type">{{ d.kind_of_doc or 'unknown kind' }}</span>
+  <span>{{ d.extraction_method or '' }}</span>
+  {% if audit.bytes %}<span>{{ (audit.bytes / 1024) | round(0) | int }} KB</span>{% endif %}
+  {% if audit.page_count %}<span>{{ audit.page_count }} page{{ 's' if audit.page_count != 1 }}</span>{% endif %}
+  {% if not d.content_bearing %}<span class="chip none">not content-bearing{% if audit.junk_reason %}: {{ audit.junk_reason }}{% endif %}</span>{% endif %}
+  <span class="mono small">sha256 {{ sha[:16] }}…</span>
+</div>
+<div class="two" style="margin-top:1rem">
+  <div>
+    {% if d.summary %}<div class="panel"><h3 style="margin-top:0">Digest</h3><p>{{ d.summary }}</p>
+      <dl class="kv">
+        {% if d.tags %}<dt>Tags</dt><dd>{{ d.tags | join(', ') }}</dd>{% endif %}
+        {% if d.maker and d.maker != 'NA' %}<dt>Maker</dt><dd>{{ d.maker }}</dd>{% endif %}
+        {% if d.model and d.model != 'NA' %}<dt>Model</dt><dd>{{ d.model }}</dd>{% endif %}
+        {% if d.equipment_details and d.equipment_details != 'NA' %}<dt>Equipment</dt><dd>{{ d.equipment_details }}</dd>{% endif %}
+      </dl></div>{% endif %}
+    {% if d.extracted_text %}<h3>Extracted text</h3><div class="mail-body">{{ text_html | safe }}</div>{% else %}<p class="muted">No text was extracted from this file.</p>{% endif %}
+  </div>
+  <aside>
+    <div class="panel"><h3 style="margin-top:0">Linked from</h3>
+      {% for ln in links %}<div class="cite"><a href="{{ root }}casefile/{{ ln.casefileId }}.html">{{ casefile_titles.get(ln.casefileId, ln.casefileId) }}</a>
+        <div class="small muted">mail {% if ln.mailbodyId in mails_available %}<a href="{{ root }}mail/{{ ln.mailbodyId }}.html">{{ ln.mailbodyId }}</a>{% else %}<span class="mono">{{ ln.mailbodyId }}</span>{% endif %}{% if ln.name %} · {{ ln.name }}{% endif %}</div></div>{% endfor %}
+      {% if cited_by %}<h3>Cited by rows</h3>{% for c in cited_by %}<div class="cite"><span class="idtag"><a href="{{ root }}casefile/{{ c.casefile_id }}.html#{{ c.row_id }}">{{ c.row_id }}</a></span> <span class="what">{{ c.family | replace('_',' ') }}</span></div>{% endfor %}{% endif %}
+      <details style="margin-top:.6rem"><summary>Raw digest JSON</summary><pre class="json">{{ digest_json }}</pre></details>
+    </div>
+  </aside>
+</div>
+{% endblock %}

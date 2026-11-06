@@ -1,0 +1,70 @@
+{
+  "bar": 0.72,
+  "families_scanned": [
+    "alarm_or_trip",
+    "performance_loss",
+    "smoke_or_exhaust",
+    "stops_or_shutdown",
+    "unclassified",
+    "wear_or_damage"
+  ],
+  "pairs": [
+    {
+      "family": "alarm_or_trip",
+      "a": {
+        "standard_id": 54,
+        "key": "closing delay alarm",
+        "display": "closing delay alarm",
+        "family": "alarm_or_trip",
+        "spellings": [
+          {
+            "raw": "Exhaust valve closing delay alarm on cylinder No.5",
+            "hits": 1,
+            "source": "casefile:69c31dde585b6c770fc42db4"
+          }
+        ],
+        "pending": false
+      },
+      "b": {
+        "standard_id": 55,
+        "key": "closing too slow alarm",
+        "display": "closing too slow alarm",
+        "family": "alarm_or_trip",
+        "spellings": [
+          {
+            "raw": "Exhaust valve closing too slow alarm on cylinder No.5",
+            "hits": 1,
+            "source": "casefile:69c31dde585b6c770fc42db4"
+          }
+        ],
+        "pending": false
+      },
+      "score": 0.772,
+      "diff": [
+        {
+          "token": "delay",
+          "side": "a",
+          "tag": "unknown"
+        },
+        {
+          "token": "too",
+          "side": "b",
+          "tag": "unknown"
+        },
+        {
+          "token": "slow",
+          "side": "b",
+          "tag": "unknown"
+        }
+      ],
+      "verdict": "REVIEW",
+      "tables": []
+    }
+  ],
+  "pending_pairs": [],
+  "counts": {
+    "MERGE-BY-TABLE": 0,
+    "REVIEW": 1,
+    "KEEP": 0
+  }
+}

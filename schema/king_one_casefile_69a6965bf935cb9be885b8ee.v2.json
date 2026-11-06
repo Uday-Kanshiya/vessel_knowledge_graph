@@ -1,0 +1,498 @@
+{
+  "casefile_id": "69a6965bf935cb9be885b8ee",
+  "imo": 1088475,
+  "progress": {
+    "last_pagenum_processed": 217,
+    "complete": true
+  },
+  "problem_statement": "Delivery Assistance for Vessel in Suez",
+  "export_meta": {
+    "category": "General",
+    "UICategory": [
+      "purchase",
+      "General",
+      "maintenance"
+    ],
+    "tags": [
+      "agentDetails",
+      "charterParty",
+      "crew",
+      "defect",
+      "itinerary",
+      "maintenance",
+      "mePerformanceReport",
+      "other",
+      "purchase",
+      "vesselIssue"
+    ]
+  },
+  "equipment": [
+    {
+      "equipment_id": "e1",
+      "name": "Starboard main engine",
+      "equipment_type": "main_engine",
+      "position": "stbd",
+      "maker": "Japan Engine Corporation (J-ENG)",
+      "model": "6UEC35LSE-C1-LPSCR",
+      "serial": null,
+      "details": "Intermediate gearbox idler gear (order BB2624018600), T.R.H. 3076 h at repair; auto backwash lube-oil self-cleaning filter",
+      "provenance": {
+        "mail_ids": [
+          "6a7b863b4d96a7cd9b2d4ba9",
+          "6a6b5fc4abf82be165f102af"
+        ],
+        "attachment_shas": [
+          "73da2fa2ee3a9a34213befaba9046ca5dd0f3d60a06073c66aa507c140d2b727"
+        ],
+        "evidence_quote": "Japan Engine Corporation service report (30 Jul 2026, Suez anchorage, T.R.H. 3076 h)"
+      }
+    },
+    {
+      "equipment_id": "e2",
+      "name": "Port main engine",
+      "equipment_type": "main_engine",
+      "position": "port",
+      "maker": "Japan Engine Corporation (J-ENG)",
+      "model": "6UEC35LSE-C1-LPSCR",
+      "serial": null,
+      "details": "Cylinders 2-4 cylinder-head jacket water seals",
+      "provenance": {
+        "mail_ids": [
+          "69ad898f2ec5dad685b9fa1c"
+        ],
+        "attachment_shas": [
+          "5b937c51ef76bf6f77a658973e96418b566f168c66e1d0d32ec1baf72a90fabb"
+        ],
+        "evidence_quote": "port ME cyl 2–4 jacket-water leaks"
+      }
+    }
+  ],
+  "problems": [
+    {
+      "problem_id": "p1",
+      "statement": "Idler gear bearing bush alloy spalling; free-end bearing severely worn, thrust collars broken",
+      "asserted_by": "oem",
+      "concluded_at": "2026-07-30",
+      "provenance": {
+        "mail_ids": [
+          "6a7b863b4d96a7cd9b2d4ba9",
+          "6a6b5fc4abf82be165f102af"
+        ],
+        "attachment_shas": [
+          "73da2fa2ee3a9a34213befaba9046ca5dd0f3d60a06073c66aa507c140d2b727",
+          "eeb39201a0c9c72a2b23737ad723dc2a7e6ffd34eb4f861a36902b2d15f75a3b"
+        ],
+        "evidence_quote": "idle gear replaced after free-end bearing found severely worn and thrust collars broken"
+      }
+    }
+  ],
+  "faults": [
+    {
+      "fault_id": "f1",
+      "symptom": "Metallic/alloy debris in auto backwash lube-oil filter and crankcase, falling lube-oil pressure",
+      "alarms": [],
+      "equipment_id": "e1",
+      "position": "intermediate gearbox idler gear",
+      "problem_id": "p1",
+      "suspected_cause": null,
+      "first_observed_at": "2026-07-20",
+      "provenance": {
+        "mail_ids": [
+          "6a7b863b4d96a7cd9b2d4ba9"
+        ],
+        "attachment_shas": [
+          "eeb39201a0c9c72a2b23737ad723dc2a7e6ffd34eb4f861a36902b2d15f75a3b",
+          "73da2fa2ee3a9a34213befaba9046ca5dd0f3d60a06073c66aa507c140d2b727"
+        ],
+        "evidence_quote": "alloy debris found 20 Jul at Suez; crosshead bearing No.1 OK; alloy spalling on intermediate idler gear bearing bush"
+      }
+    },
+    {
+      "fault_id": "f2",
+      "symptom": "Exhaust bellows cracked with smoke and sparks at NCR 158 rpm",
+      "alarms": [],
+      "equipment_id": "e1",
+      "position": "No.5 and No.6 cylinder exhaust bellows",
+      "problem_id": null,
+      "suspected_cause": "Chief Engineer blames poor main engine build quality",
+      "first_observed_at": "2026-03-07",
+      "provenance": {
+        "mail_ids": [
+          "69ad898f2ec5dad685b9fa1c"
+        ],
+        "attachment_shas": [
+          "5b937c51ef76bf6f77a658973e96418b566f168c66e1d0d32ec1baf72a90fabb"
+        ],
+        "evidence_quote": "at NCR 158 RPM the stbd ME No.6 and No.5 exhaust bellows cracked (smoke/sparks)"
+      }
+    },
+    {
+      "fault_id": "f3",
+      "symptom": "Cylinder-head jacket water seals leaking",
+      "alarms": [],
+      "equipment_id": "e2",
+      "position": "cylinders 2-4",
+      "problem_id": null,
+      "suspected_cause": null,
+      "first_observed_at": "2026-03-07",
+      "provenance": {
+        "mail_ids": [
+          "69ad898f2ec5dad685b9fa1c"
+        ],
+        "attachment_shas": [
+          "5b937c51ef76bf6f77a658973e96418b566f168c66e1d0d32ec1baf72a90fabb"
+        ],
+        "evidence_quote": "port ME cyl 2–4 jacket-water leaks"
+      }
+    },
+    {
+      "fault_id": "f4",
+      "symptom": "Idle-gear support shaft cover plate bolts found fractured",
+      "alarms": [],
+      "equipment_id": "e1",
+      "position": "idle-gear support shaft cover plate",
+      "problem_id": null,
+      "suspected_cause": null,
+      "first_observed_at": "2026-08-04",
+      "provenance": {
+        "mail_ids": [
+          "6a7b863b4d96a7cd9b2d4ba9"
+        ],
+        "attachment_shas": [],
+        "evidence_quote": "cover plate bolts found fractured on 4 Aug, renewed on board"
+      }
+    }
+  ],
+  "action_logs": [
+    {
+      "action_id": "a1",
+      "fault_id": "f2",
+      "seq": 1,
+      "occurrence_no": 1,
+      "target": "No.5 and No.6 exhaust bellows",
+      "action": "Reduced main engine speed from 158 to 136 rpm",
+      "kind": "corrective",
+      "performed_by_role": "vessel_crew",
+      "advised_by_org": null,
+      "parts": [],
+      "date_performed": null,
+      "asserted_in_mail": "69ad898f2ec5dad685b9fa1c",
+      "date_reported": "2026-03-08T00:00:00Z",
+      "outcome": {
+        "value": "unknown",
+        "verification": "none",
+        "outcome_in_mail": null,
+        "outcome_date": null,
+        "evidence_quote": null
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "69ad898f2ec5dad685b9fa1c"
+        ],
+        "attachment_shas": [
+          "5b937c51ef76bf6f77a658973e96418b566f168c66e1d0d32ec1baf72a90fabb"
+        ],
+        "evidence_quote": "speed cut to 136 RPM"
+      }
+    },
+    {
+      "action_id": "a2",
+      "fault_id": "f2",
+      "seq": 2,
+      "occurrence_no": 1,
+      "target": "No.5 and No.6 exhaust bellows",
+      "action": "Renewed cracked exhaust bellows at Sri Lanka",
+      "kind": "corrective",
+      "performed_by_role": "vessel_crew",
+      "advised_by_org": null,
+      "parts": [
+        "exhaust bellows"
+      ],
+      "date_performed": null,
+      "asserted_in_mail": "69ad898f2ec5dad685b9fa1c",
+      "date_reported": "2026-03-08T00:00:00Z",
+      "outcome": {
+        "value": "unknown",
+        "verification": "none",
+        "outcome_in_mail": null,
+        "outcome_date": null,
+        "evidence_quote": null
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "69ad898f2ec5dad685b9fa1c"
+        ],
+        "attachment_shas": [
+          "5b937c51ef76bf6f77a658973e96418b566f168c66e1d0d32ec1baf72a90fabb"
+        ],
+        "evidence_quote": "bellows renewed at Sri Lanka"
+      }
+    },
+    {
+      "action_id": "a3",
+      "fault_id": "f2",
+      "seq": 3,
+      "occurrence_no": 1,
+      "target": null,
+      "action": "Guarantee claim E013 raised with shipyard for two exhaust bellows expansion joints (part EA17151)",
+      "kind": "commercial",
+      "performed_by_role": "superintendent",
+      "advised_by_org": null,
+      "parts": [
+        "exhaust expansion joint EA17151 x2"
+      ],
+      "date_performed": null,
+      "asserted_in_mail": "69b15aefd8711b7d4f56b867",
+      "date_reported": "2026-03-11T00:00:00Z",
+      "outcome": {
+        "value": "partial",
+        "verification": "reported_only",
+        "outcome_in_mail": "69ef0172589a27d87db34108",
+        "outcome_date": "2026-04-27",
+        "evidence_quote": "bellows are still stored at Cairo airport and must be delivered when the vessel calls Suez"
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "69b15aefd8711b7d4f56b867",
+          "69d758e1f185dd7ca1304cf7"
+        ],
+        "attachment_shas": [],
+        "evidence_quote": "guarantee claim E013"
+      }
+    },
+    {
+      "action_id": "a4",
+      "fault_id": "f2",
+      "seq": 4,
+      "occurrence_no": 1,
+      "target": null,
+      "action": "Shipyard to send two service engineers at Singapore to investigate bellows cracking",
+      "kind": "diagnostic",
+      "performed_by_role": "yard",
+      "advised_by_org": null,
+      "parts": [],
+      "date_performed": null,
+      "asserted_in_mail": "6a03c4bf62f496cb304b406a",
+      "date_reported": "2026-05-13T00:00:00Z",
+      "outcome": {
+        "value": "unknown",
+        "verification": "none",
+        "outcome_in_mail": null,
+        "outcome_date": null,
+        "evidence_quote": null
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "6a03c4bf62f496cb304b406a"
+        ],
+        "attachment_shas": [],
+        "evidence_quote": "send two service engineers at Singapore to investigate cracking of main engine bellows expansion joints"
+      }
+    },
+    {
+      "action_id": "a5",
+      "fault_id": "f1",
+      "seq": 5,
+      "occurrence_no": 1,
+      "target": "No.1 crosshead, con-rod big end, main bearings, idler gear",
+      "action": "Opened crankcase and inspected bearings after debris found in lube-oil filter",
+      "kind": "diagnostic",
+      "performed_by_role": "vessel_crew",
+      "advised_by_org": null,
+      "parts": [],
+      "date_performed": "2026-07-20",
+      "asserted_in_mail": "6a7b863b4d96a7cd9b2d4ba9",
+      "date_reported": "2026-08-11T00:00:00Z",
+      "outcome": {
+        "value": "conclusive",
+        "verification": "confirmed_by_vessel",
+        "outcome_in_mail": "6a7b863b4d96a7cd9b2d4ba9",
+        "outcome_date": "2026-07-20",
+        "evidence_quote": "crosshead bearing No.1 OK; alloy spalling on intermediate idler gear bearing bush"
+      },
+      "finding": "No.1 crosshead bearing OK; alloy spalling on intermediate idler gear bearing bush",
+      "provenance": {
+        "mail_ids": [
+          "6a7b863b4d96a7cd9b2d4ba9"
+        ],
+        "attachment_shas": [
+          "eeb39201a0c9c72a2b23737ad723dc2a7e6ffd34eb4f861a36902b2d15f75a3b",
+          "05d927d0be882e7d81ee6ca4eac20f26139afc6282b81146b9f431a5049fdc57"
+        ],
+        "evidence_quote": "inspections found idle-gear bushing alloy exfoliation"
+      }
+    },
+    {
+      "action_id": "a6",
+      "fault_id": "f1",
+      "seq": 6,
+      "occurrence_no": 1,
+      "target": null,
+      "action": "Cancelled Suez transit; vessel held at anchorage pending repair",
+      "kind": "administrative",
+      "performed_by_role": "superintendent",
+      "advised_by_org": null,
+      "parts": [],
+      "date_performed": "2026-07-20",
+      "asserted_in_mail": "6a7b863b4d96a7cd9b2d4ba9",
+      "date_reported": "2026-08-11T00:00:00Z",
+      "outcome": {
+        "value": "unknown",
+        "verification": "none",
+        "outcome_in_mail": null,
+        "outcome_date": null,
+        "evidence_quote": null
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "6a7b863b4d96a7cd9b2d4ba9"
+        ],
+        "attachment_shas": [
+          "eeb39201a0c9c72a2b23737ad723dc2a7e6ffd34eb4f861a36902b2d15f75a3b"
+        ],
+        "evidence_quote": "transit cancelled"
+      }
+    },
+    {
+      "action_id": "a7",
+      "fault_id": "f1",
+      "seq": 7,
+      "occurrence_no": 1,
+      "target": null,
+      "action": "Spare idle gear ordered from J-ENG and delivered on board at Suez",
+      "kind": "commercial",
+      "performed_by_role": "superintendent",
+      "advised_by_org": "Japan Engine Corporation",
+      "parts": [
+        "idle gear, order BB2624018600"
+      ],
+      "date_performed": "2026-07-26",
+      "asserted_in_mail": "6a7b863b4d96a7cd9b2d4ba9",
+      "date_reported": "2026-08-11T00:00:00Z",
+      "outcome": {
+        "value": "resolved",
+        "verification": "confirmed_by_vessel",
+        "outcome_in_mail": "6a7b863b4d96a7cd9b2d4ba9",
+        "outcome_date": "2026-07-26",
+        "evidence_quote": "parts on board 26 Jul"
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "6a7b863b4d96a7cd9b2d4ba9"
+        ],
+        "attachment_shas": [
+          "eeb39201a0c9c72a2b23737ad723dc2a7e6ffd34eb4f861a36902b2d15f75a3b"
+        ],
+        "evidence_quote": "parts on board 26 Jul, manufacturer technicians replaced idler gear"
+      }
+    },
+    {
+      "action_id": "a8",
+      "fault_id": "f1",
+      "seq": 8,
+      "occurrence_no": 1,
+      "target": "intermediate gearbox idler gear",
+      "action": "Idle gear replaced by J-ENG service engineers; deflections, backlash and tooth contact checked",
+      "kind": "corrective",
+      "performed_by_role": "oem",
+      "advised_by_org": "Japan Engine Corporation",
+      "parts": [
+        "idle gear"
+      ],
+      "date_performed": "2026-07-30",
+      "asserted_in_mail": "6a698fa814d5117541374ade",
+      "date_reported": "2026-07-29T00:00:00Z",
+      "outcome": {
+        "value": "resolved",
+        "verification": "confirmed_by_oem",
+        "outcome_in_mail": "6a6b5fc4abf82be165f102af",
+        "outcome_date": "2026-07-30",
+        "evidence_quote": "engine tested and sea trial satisfactory"
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "6a698fa814d5117541374ade",
+          "6a6b4fa9abf82be165f0f8b7",
+          "6a6b5fc4abf82be165f102af"
+        ],
+        "attachment_shas": [
+          "73da2fa2ee3a9a34213befaba9046ca5dd0f3d60a06073c66aa507c140d2b727"
+        ],
+        "evidence_quote": "idle gear replaced after free-end bearing found severely worn and thrust collars broken"
+      }
+    },
+    {
+      "action_id": "a9",
+      "fault_id": "f1",
+      "seq": 9,
+      "occurrence_no": 1,
+      "target": null,
+      "action": "Post-overhaul running-in per maker procedure, 136 rpm raised stepwise to 152 rpm",
+      "kind": "preventive",
+      "performed_by_role": "vessel_crew",
+      "advised_by_org": "Japan Engine Corporation",
+      "parts": [],
+      "date_performed": "2026-07-31",
+      "asserted_in_mail": "6a6c644866026f0d83033cee",
+      "date_reported": "2026-07-31T00:00:00Z",
+      "outcome": {
+        "value": "partial",
+        "verification": "reported_only",
+        "outcome_in_mail": "6a6dc0777c7723e43dc85f2a",
+        "outcome_date": "2026-08-01",
+        "evidence_quote": "running-in at 136 rpm (84% NCR) for 0.5 day after transit, now 145 rpm (90% NCR)"
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "6a6c644866026f0d83033cee",
+          "6a6ca30c7c7723e43dc7e2f9",
+          "6a6dd0c47c7723e43dc8667c"
+        ],
+        "attachment_shas": [],
+        "evidence_quote": "engine maker requires running-in per attached procedure"
+      }
+    },
+    {
+      "action_id": "a10",
+      "fault_id": "f4",
+      "seq": 10,
+      "occurrence_no": 1,
+      "target": "idle-gear support shaft cover plate",
+      "action": "Fractured cover plate bolts renewed on board",
+      "kind": "corrective",
+      "performed_by_role": "vessel_crew",
+      "advised_by_org": null,
+      "parts": [
+        "cover plate bolts"
+      ],
+      "date_performed": "2026-08-04",
+      "asserted_in_mail": "6a7b863b4d96a7cd9b2d4ba9",
+      "date_reported": "2026-08-11T00:00:00Z",
+      "outcome": {
+        "value": "unknown",
+        "verification": "none",
+        "outcome_in_mail": null,
+        "outcome_date": null,
+        "evidence_quote": null
+      },
+      "finding": null,
+      "provenance": {
+        "mail_ids": [
+          "6a7b863b4d96a7cd9b2d4ba9"
+        ],
+        "attachment_shas": [],
+        "evidence_quote": "cover plate bolts found fractured on 4 Aug, renewed on board"
+      }
+    }
+  ],
+  "validation_flags": [],
+  "needs_review": false
+}

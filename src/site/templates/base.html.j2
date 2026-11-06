@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Casefile browser{% endblock %}</title>
+<link rel="stylesheet" href="{{ root }}assets/site.css">
+</head>
+<body data-admin-pages="{{ 1 if admin_enabled else 0 }}"{% block bodyattrs %}{% endblock %}>
+<div class="topbar"><div class="in">
+  <a class="brand" href="{{ root }}index.html">Casefile browser <span>· {{ n_casefiles }} casefiles · built {{ built_at }}</span></a>
+  <nav>
+    <a href="{{ root }}index.html">Search</a>
+    {% if admin_enabled %}<a class="adm-link adm" href="{{ root }}admin/lookup.html">Lookup tables</a>
+    <a class="adm-link adm" href="{{ root }}admin/review.html">Review queue</a>
+    {% block navextra %}{% endblock %}{% endif %}
+    <button class="adm-toggle" id="admToggle" title="Show extraction-debugging views (needs_review, flags, journey)">admin</button>
+  </nav>
+</div></div>
+<div class="wrap">
+{% block content %}{% endblock %}
+<div class="footer">Rendered from <code>casefile_extract.v2</code> records in the run store · every number on these pages is derived at render time · identity is <code>casefile_id</code>, never the vessel name.</div>
+</div>
+<script>
+(function(){
+  var KEY='cfb.admin', b=document.body, t=document.getElementById('admToggle');
+  var qs=new URLSearchParams(location.search);
+  var on=false; try{ on=localStorage.getItem(KEY)==='1'; }catch(e){}
+  if(qs.get('admin')==='1'){ on=true; try{localStorage.setItem(KEY,'1');}catch(e){} }
+  if(on||b.dataset.forceAdmin==='1') b.classList.add('admin');
+  t.addEventListener('click',function(){ b.classList.toggle('admin'); try{localStorage.setItem(KEY,b.classList.contains('admin')?'1':'0');}catch(e){} });
+})();
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

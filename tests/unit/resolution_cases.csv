@@ -1,0 +1,83 @@
+kind,raw,vessel_name,equipment_type,maker,model,serial,expected_key,expected_parts_json,expected_method
+# Table-driven resolver cases (docs/13 §4, §8; docs/16 P0 §7, P1 §6): ONE parametrised test in
+# test_resolution_cases.py resolves `raw` as `kind` through a FRESH store with the repo config
+# (config/*.csv, config/vessel_names.txt), NO seeds and the symptom mint guard, passing
+# context={"equipment_type": ..., "vessel_name": ...} from the two record-context columns, then asserts:
+#   expected_key          Resolution.key
+#   expected_parts_json   a JSON object checked as a SUBSET of {"position": Resolution.position} merged
+#                         with the alias row's parts (pending row's parts when queued): every key listed
+#                         must match; a null value means the key must be absent / None
+#   expected_method       Resolution.method (new_term on an empty store; queued when the guard refuses)
+# Rows seeded 2026-10-25 (P0), extended for the symptom decomposition (P1, A1: the key is the
+# failure mode; component / location / modifiers / position / residue live in parts) and for the
+# equipment cleaner (P2: maker / model / serial are the record entry's own values; vessel_name is the
+# record's vessel, so a stripped fleet name that differs is a sister ship).
+equipment,No. 3 AE,PACIFIC PEARL,auxiliary_engine,,,,auxiliary engine,"{""position"": ""No.3"", ""steps"": [""position"", ""abbreviations""]}",new_term
+equipment,Auxiliary Engine No.4,MAERSK EL PALOMAR,auxiliary_engine,,,,auxiliary engine,"{""position"": ""No.4""}",new_term
+equipment,M/E C.W. P/P,OASIS,main_engine,,,,main engine cooling water pump,"{""position"": null}",new_term
+equipment,right main engine,KING ONE,main_engine,,,,main engine,"{""position"": ""starboard""}",new_term
+equipment,left main engine,KING ONE,main_engine,,,,main engine,"{""position"": ""port""}",new_term
+equipment,HFO storage tank 1S,OASIS,tank,,,,heavy fuel oil storage tank,"{""position"": ""1S""}",new_term
+equipment,Cofferdam (S),OASIS,hull,,,,cofferdam,"{""position"": ""starboard""}",new_term
+part,safety valves,,,,,,safety valve,"{""position"": null}",new_term
+part,2 pcs exhaust valve stroke sensors,,,,,,exhaust valve stroke sensor,"{""position"": null}",new_term
+part,Port Side Forward Chain Stopper,OASIS,,,,,chain stopper,"{""position"": ""port forward""}",new_term
+part,new idle gear,,,,,,idle gear,"{""position"": null}",new_term
+# --- symptoms (P1): component tail; the equipment words of the record's own type are transparent
+symptom,Knocking sound from main engine exhaust valve cylinder no. 4.,OASIS,main_engine,,,,knocking sound,"{""position"": ""cylinder no. 4"", ""component"": ""exhaust valve"", ""component_raw"": ""exhaust valve"", ""location"": null}",new_term
+symptom,Knocking sound from exhaust valve,,main_engine,,,,knocking sound,"{""component"": ""exhaust valve"", ""steps"": [""tail"", ""component""]}",new_term
+symptom,Knocking sound,,main_engine,,,,knocking sound,"{""position"": null, ""component"": null}",new_term
+# component head; equipment words gone; the unmatched tail stays in the core and goes to residue
+symptom,Exhaust valve on M/E cylinder No.5 required renewal,OASIS,main_engine,,,,required renewal,"{""component"": ""exhaust valve"", ""position"": ""cylinder no.5"", ""residue"": [""required"", ""renewal""]}",new_term
+# position + component
+symptom,Piston rings’ flash layer chipped off at certain locations in Unit #2,,main_engine,,,,flash layer chip off at certain location,"{""component"": ""piston ring"", ""position"": ""unit #2""}",new_term
+# location only; the tank words stay in the core / residue; a second location left in the core -> queued
+symptom,Fuel oil leaking into the pump room from a hole about 1 cm in diameter in the bottom floor of HFO storage tank 1S,OASIS,storage_tank,,,,fuel oil leak from a hole about 1 cm in diameter in the bottom floor of hfo 1s,"{""location"": ""pump room"", ""residue"": [""hfo""], ""leftover"": [""bottom floor""]}",queued
+# modifier + component: the head term (what fractured) wins; cover plate / idle gear / starboard stay in the core -> queued
+symptom,Bolts of the support shaft cover plate for the starboard main engine idle gear were found fractured,KING ONE,main_engine,,,,support shaft cover plate for the starboard idle gear were found fracture,"{""component"": ""bolt"", ""component_raw"": ""Bolts"", ""leftover"": [""cover plate"", ""starboard"", ""idle gear""]}",queued
+# no known terms: whole, residue empty
+symptom,Main engine slowdown alarm activated,,main_engine,,,,slowdown alarm activate,"{""component"": null, ""location"": null, ""residue"": null}",new_term
+# unknown tail: whole, residue set (the fail-to-start wording moved to the P1b block below)
+# the fuel-pump case (docs/15 §2): "pump" is no longer eaten; adjacent component terms are one phrase
+symptom,"Unit No. 7 fuel pump spring found broken, with a groove in the pump casing.",,auxiliary_engine,,,,found break with a groove,"{""component"": ""fuel pump spring"", ""location"": ""pump casing"", ""position"": ""unit no. 7""}",new_term
+# an alarm clause inside a symptom keeps "alarm" in the core
+symptom,Exhaust valve closing delay alarm on cylinder No.5,,main_engine,,,,closing delay alarm,"{""component"": ""exhaust valve"", ""position"": ""cylinder no.5""}",new_term
+# a fleet vessel name in the wording is stripped (config/vessel_names.txt)
+symptom,OASIS knocking sound from exhaust valve,OASIS,main_engine,,,,knocking sound,"{""vessel"": ""oasis"", ""component"": ""exhaust valve""}",new_term
+# a label that is only a component has no failure mode: passes through whole and is queued
+symptom,Exhaust valve,,main_engine,,,,exhaust valve,"{""leftover"": [""exhaust valve""], ""steps"": [""whole""]}",queued
+# --- equipment (P2): own-vessel prefix; sister-vessel prefix (PACIFIC GARNET is in vessel_names_extra.txt)
+equipment,OASIS M/E,OASIS,main_engine,,,,main engine,"{""vessel"": ""oasis"", ""sister_vessel"": null, ""stripped"": {""vessel"": ""OASIS""}, ""steps"": [""vessel_strip"", ""abbreviations""]}",new_term
+equipment,PACIFIC GARNET AE #1,PACIFIC PEARL,auxiliary_engine,,,,auxiliary engine,"{""position"": ""No.1"", ""vessel"": ""pacific garnet"", ""sister_vessel"": ""pacific garnet"", ""stripped"": {""vessel"": ""PACIFIC GARNET""}}",new_term
+equipment,Pacific-Garnet AE #2,PACIFIC PEARL,auxiliary_engine,,,,auxiliary engine,"{""position"": ""No.2"", ""vessel"": ""pacific garnet""}",new_term
+# CJK full glossary hit: side from the glossary's position word; the record's position field (right / left) is not touched
+equipment,右主机,KING ONE,main_engine,Japan Engine Corporation,6UEC35LSE-C1-LPSCR,,main engine,"{""position"": ""starboard"", ""side"": ""starboard"", ""script"": ""zh"", ""stripped"": {""glossary"": ""右主机""}, ""steps"": [""glossary"", ""position""]}",new_term
+equipment,左主机,KING ONE,main_engine,,,,main engine,"{""position"": ""port"", ""side"": ""port"", ""script"": ""zh""}",new_term
+equipment,3号发电机,KING ONE,generator,,,,generator,"{""position"": ""No.3"", ""script"": ""zh""}",new_term
+# CJK partial hit: 增压器 (turbocharger) is not in the glossary and no adjudicator is injected -> queued
+equipment,右主机增压器,KING ONE,main_engine,,,,main engine 增压器,"{""position"": ""starboard"", ""untranslated"": ""增压器"", ""issues"": [""needs_translation""]}",queued
+# ordinals before and after the noun
+equipment,AE No. 2 SCR,WHITE ALBA,scr_system,Daihatsu Diesel Mfg. Co. Ltd.,DE-18,,auxiliary engine selective catalytic reduction,"{""position"": ""No.2""}",new_term
+# the record entry's maker / model inside the name are stripped (not extracted: the record has them)
+equipment,MAN B&W main engine S60ME-C8,OASIS,main_engine,MAN B&W,S60ME-C8,HE0003,main engine,"{""stripped"": {""record"": ""MAN B&W | S60ME-C8""}, ""steps"": [""record_strip""]}",new_term
+equipment,Main engine HE0003,OASIS,main_engine,MAN B&W,S60ME-C8,HE0003,main engine,"{""stripped"": {""record"": ""HE0003""}}",new_term
+# a qualifier on a part line is stripped and kept
+part,spare exhaust valve,,,,,,exhaust valve,"{""stripped"": {""qualifier"": ""spare""}, ""steps"": [""qualifier""]}",new_term
+part,Damaged bearing (old),,,,,,bearing,"{""stripped"": {""qualifier"": ""damaged old""}}",new_term
+# a hyphenated side word is a position too
+equipment,Port-side forward chain-stopper guillotine bar,OASIS,chain_stopper_component,,,,chain stopper guillotine bar,"{""position"": ""port forward"", ""side"": ""port""}",new_term
+# a clean label is unchanged
+equipment,Main engine,KMARIN RESOLUTION,main_engine,,,,main engine,"{""position"": null, ""stripped"": null, ""steps"": null}",new_term
+# --- symptoms (P1b): HOW it is said and WHEN / HOW OFTEN leave the core (symptom_phrases, condition_terms,
+# frequency_terms, equipment_head_nouns); the three wordings below are ONE standard
+symptom,No.1 AE could not start,,auxiliary_engine,,,,fail to start,"{""position"": ""no.1"", ""phrases"": [""could not start""], ""condition"": null}",new_term
+symptom,Engine sometimes fails to start in dead slow,,main_engine,,,,fail to start,"{""condition"": ""dead slow"", ""frequency"": ""intermittent"", ""head_noun"": ""engine"", ""residue"": null}",new_term
+symptom,M/E failed to start during approaching berth,,main_engine,,,,fail to start,"{""condition"": ""approaching berth"", ""steps"": [""equipment_strip"", ""tail"", ""condition""]}",new_term
+symptom,LO sump high/low alarm not activating,,auxiliary_engine,,,,lo high/low alarm fail to activate,"{""location"": ""sump"", ""phrases"": [""not activate""]}",new_term
+symptom,LO sump level HIGH/LOW alarm not activating,,auxiliary_engine,,,,lo high/low alarm fail to activate,"{""location"": ""sump""}",new_term
+symptom,Vibrating sound,,main_engine,,,,vibrating sound,"{""component"": null}",new_term
+symptom,Battery dead,,,,,,battery dead,"{""condition"": null}",new_term
+symptom,Oil leak in engine room,,main_engine,,,,oil leak,"{""location"": ""engine room"", ""head_noun"": null}",new_term
+symptom,Fuel plunger too high alarm only appears above 80 rpm.,,main_engine,,,,too high alarm only appear,"{""component"": ""fuel plunger"", ""condition"": ""above 80 rpm""}",new_term
+# an unknown "when" tail stays whole and reaches residue
+symptom,Knocking sound during harbour generator test,,main_engine,,,,knocking sound during harbour generator test,"{""residue"": [""harbour"", ""generator"", ""test""], ""condition"": null}",new_term

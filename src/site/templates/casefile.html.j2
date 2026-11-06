@@ -1,0 +1,146 @@
+{% extends "base.html.j2" %}
+{% set rec = record %}
+{% block title %}{{ rec.vessel_name }} · {{ rec.problem_statement }}{% endblock %}
+{% block navextra %}<a class="adm-link adm" href="{{ root }}admin/journey/{{ rec.casefile_id }}.html">Journey of this casefile</a>{% endblock %}
+{% block content %}
+{% macro mail_link(mid, rid, cls='') -%}
+  {%- if mid -%}
+    {%- if mid in mails_available -%}<a class="{{ cls }}" href="{{ root }}mail/{{ mid }}.html#q-{{ rid }}" title="open mail {{ mid }}">{%- else -%}<span class="{{ cls }}" title="mail body not in cache: {{ mid }}">{%- endif -%}
+  {%- endif -%}
+{%- endmacro %}
+{% macro mail_link_end(mid) -%}{%- if mid -%}{%- if mid in mails_available -%}</a>{%- else -%}</span>{%- endif -%}{%- endif -%}{%- endmacro %}
+{% macro cite(prov, rid) -%}
+  {%- if prov and prov.evidence_quote -%}
+    {%- set mids = prov.mail_ids or [] -%}
+    {%- set home = quote_home.get(rid, mids[0] if mids else None) -%}
+    <div class="q">“{{ mail_link(home, rid) }}{{ prov.evidence_quote | truncate(220) }}{{ mail_link_end(home) }}”
+    {%- for mid in mids %} <span class="idtag">{% if mid in mails_available %}<a href="{{ root }}mail/{{ mid }}.html" title="{{ mid }}">mail {{ loop.index }}</a>{% else %}mail {{ loop.index }}{% endif %}</span>{% endfor -%}
+    {%- for sha in prov.attachment_shas or [] %} <span class="idtag">{% if sha in attachments_available %}<a href="{{ root }}attachment/{{ sha }}.html">attachment {{ sha[:8] }}</a>{% else %}attachment {{ sha[:8] }}{% endif %}</span>{% endfor -%}
+    </div>
+    {%- for s in prov.supporting or [] %}<div class="q adm">supporting: “{{ s.evidence_quote | truncate(160) }}”{% for mid in s.mail_ids or [] %} <span class="idtag">{% if mid in mails_available %}<a href="{{ root }}mail/{{ mid }}.html" title="{{ mid }}">mail</a>{% else %}mail{% endif %}</span>{% endfor %}</div>{% endfor -%}
+  {%- endif -%}
+{%- endmacro %}
+{% macro flags_for(rid) -%}{% for f in flags_by_row.get(rid, []) %}<span class="chip flag adm" title="{{ f.raw }}">{{ f.kind }}{% if f.field %}.{{ f.field }}{% endif %}</span>{% endfor %}{%- endmacro %}
+
+<div class="cf-head">
+  <span class="vessel">{{ rec.vessel_name }}{% if rec.imo %} · IMO {{ rec.imo }}{% endif %}</span>
+  <span class="muted small mono">{{ rec.casefile_id }}</span>
+</div>
+<h1>{{ rec.problem_statement }}</h1>
+<div class="cf-meta">
+  {% if dates[0] %}<span>{{ dates[0] | fmt_date }}{% if dates[1] and dates[1] != dates[0] %} → {{ dates[1] | fmt_date }}{% endif %}</span>{% endif %}
+  <span>{{ rec.equipment | length }} equipment · {{ rec.faults | length }} fault{{ 's' if rec.faults | length != 1 }} · {{ rec.action_logs | length }} action{{ 's' if rec.action_logs | length != 1 }}</span>
+  {% if rec.export_meta and rec.export_meta.casefile_link %}<a href="{{ rec.export_meta.casefile_link }}" rel="noopener">source casefile ↗</a>{% endif %}
+</div>
+<div style="margin-top:.5rem">
+  {% for t in equipment_types %}<span class="chip type">{{ t }}</span>{% endfor %}
+  {% for k, n in tally %}<span class="chip {{ outcome_group[k] }}">{{ n }} {{ k }}</span>{% endfor %}
+  {% if rec.needs_review %}<span class="chip warn adm">needs review · {{ rec.validation_flags | length }} flag{{ 's' if rec.validation_flags | length != 1 }}</span>{% endif %}
+</div>
+{% if rec.needs_review %}<div class="banner warn adm block">The validator flagged this record: {% for f in rec.validation_flags %}<code>{{ f }}</code>{{ ', ' if not loop.last }}{% endfor %}. Flags are shown on the rows they belong to{% if admin_enabled %}; the <a href="{{ root }}admin/journey/{{ rec.casefile_id }}.html">journey</a> shows where each row came from{% endif %}.</div>{% endif %}
+<div class="toc">
+  <a href="#equipment">Equipment</a><a href="#faults">Faults &amp; actions</a>{% if rec.problems %}<a href="#problems">Problems</a>{% endif %}<a href="#evidence">Evidence</a><a href="#meta">Export metadata &amp; raw JSON</a>
+</div>
+
+<h2 id="equipment">Equipment</h2>
+<div class="cards">
+{% for e in rec.equipment %}
+  <div class="panel eq" id="{{ e.equipment_id }}">
+    <div><span class="idtag">{{ e.equipment_id }}</span> <strong>{{ e.name }}</strong> <span class="chip type">{{ e.equipment_type }}</span>{{ flags_for(e.equipment_id) }}</div>
+    <dl class="kv">
+      {% if e.position %}<dt>Position</dt><dd>{{ canonical_position(e.position) }}{% if canonical_position(e.position) != e.position %} <span class="muted small">(as written: {{ e.position }})</span>{% endif %}</dd>{% endif %}
+      {% if e.maker and e.maker != 'NA' %}<dt>Maker</dt><dd>{{ e.maker }}</dd>{% endif %}
+      {% if e.model and e.model != 'NA' %}<dt>Model</dt><dd>{{ e.model }}</dd>{% endif %}
+      {% if e.serial and e.serial != 'NA' %}<dt>Serial</dt><dd>{{ e.serial }}</dd>{% endif %}
+      {% if e.details and e.details != 'NA' %}<dt>Details</dt><dd>{{ e.details }}</dd>{% endif %}
+      <dt>Faults</dt><dd>{% for f in faults_by_equipment.get(e.equipment_id, []) %}<a href="#{{ f.fault_id }}">{{ f.fault_id }}</a>{{ ' · ' if not loop.last }}{% else %}<span class="muted">none</span>{% endfor %}</dd>
+    </dl>
+    {{ cite(e.provenance, e.equipment_id) }}
+  </div>
+{% else %}<p class="muted">No equipment rows.</p>{% endfor %}
+</div>
+
+<h2 id="faults">Faults and what was done</h2>
+{% for f in rec.faults %}
+<div class="fault" id="{{ f.fault_id }}">
+  <div><span class="idtag">{{ f.fault_id }}</span> <span class="sym">{{ f.symptom }}</span>{{ flags_for(f.fault_id) }}</div>
+  {% set d = symptom_parts.get(f.fault_id) if symptom_parts is defined else none %}{% if d %}<div class="small muted decomposed"><strong>{{ d.core }}</strong>{% if d.component %} · on {{ d.component }}{% endif %}{% if d.location %} · in {{ d.location }}{% endif %}{% if d.modifiers %} · {{ d.modifiers }}{% endif %}{% if d.condition %} · when {{ d.condition }}{% endif %}{% if d.frequency %} · {{ d.frequency }}{% endif %}</div>{% endif %}
+  <div class="line">
+    {% if f.equipment_id %}on <a href="#{{ f.equipment_id }}">{{ (equipment_by_id.get(f.equipment_id) or {}).get('name', f.equipment_id) }}</a>{% endif %}
+    {% if f.position %} · {{ f.position }}{% endif %}
+    {% if f.first_observed_at %} · first observed {{ f.first_observed_at | fmt_date }}{% endif %}
+    {% if f.alarms %} · alarms: {% for al in f.alarms %}<code>{{ al }}</code>{{ ', ' if not loop.last }}{% endfor %}{% endif %}
+    {% if f.recurrence_of %} · recurrence of <a href="#{{ f.recurrence_of }}">{{ f.recurrence_of }}</a>{% endif %}
+  </div>
+  {% if f.suspected_cause %}<div class="line">suspected cause: {{ f.suspected_cause }}</div>{% endif %}
+  {% if f.problem_id and problems_by_id.get(f.problem_id) %}{% set p = problems_by_id[f.problem_id] %}
+    <div class="probtag" id="{{ p.problem_id }}"><span class="idtag">{{ p.problem_id }}</span> <strong>problem:</strong> {{ p.statement }}{% if p.asserted_by %} <span class="muted">· asserted by {{ p.asserted_by }}{% if p.concluded_at %}, {{ p.concluded_at | fmt_date }}{% endif %}</span>{% endif %}{{ flags_for(p.problem_id) }}
+    {{ cite(p.provenance, p.problem_id) }}</div>
+  {% endif %}
+  {{ cite(f.provenance, f.fault_id) }}
+  {% set acts = actions_by_fault.get(f.fault_id, []) %}
+  {% if acts %}
+  <table class="actions">
+    <thead><tr><th>#</th><th>Date</th><th>Kind</th><th>Action</th><th>By</th><th>Outcome</th><th>Finding</th></tr></thead>
+    <tbody>
+    {% for a in acts %}
+      <tr id="{{ a.action_id }}">
+        <td class="nowrap"><span class="idtag">{{ a.action_id }}</span><br><span class="muted small">seq {{ a.seq }}{% if a.occurrence_no and a.occurrence_no > 1 %} · #{{ a.occurrence_no }}{% endif %}</span></td>
+        <td class="nowrap">{% if a.date_performed %}{{ a.date_performed | fmt_date }}{% elif a.date_reported %}<span class="muted" title="date reported; no date performed stated">{{ a.date_reported | fmt_date }}</span>{% else %}<span class="muted">—</span>{% endif %}</td>
+        <td><span class="chip kind">{{ a.kind }}</span></td>
+        <td>{{ a.action }}{% if a.target %} <span class="muted small">· target {{ a.target }}</span>{% endif %}
+          {% if a.parts %}<div class="small muted">parts: {{ a.parts | join(', ') }}</div>{% endif %}
+          {% if a.also_fault_ids %}<div class="small muted">also for {% for x in a.also_fault_ids %}<a href="#{{ x }}">{{ x }}</a>{{ ', ' if not loop.last }}{% endfor %}</div>{% endif %}
+          {{ cite(a.provenance, a.action_id) }}{{ flags_for(a.action_id) }}</td>
+        <td class="small">{{ (a.performed_by_role or 'unknown') | replace('_', ' ') }}{% if a.advised_by_org %}<br><span class="muted">advised by {{ a.advised_by_org }}</span>{% endif %}</td>
+        <td>{% set o = a.outcome or {} %}<span class="chip {{ outcome_group.get(o.value or 'unknown', 'none') }}">{{ o.value or 'unknown' }}</span>
+          {% if o.verification and o.verification != 'none' %}<div class="small muted">{{ o.verification | replace('_', ' ') }}</div>{% endif %}
+          {% if o.outcome_date %}<div class="small muted">{{ o.outcome_date | fmt_date }}</div>{% endif %}
+          {% if o.evidence_quote %}<div class="q">“{{ mail_link(o.outcome_in_mail, a.action_id) }}{{ o.evidence_quote | truncate(160) }}{{ mail_link_end(o.outcome_in_mail) }}”</div>{% endif %}</td>
+        <td class="small">{{ a.finding or '' }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}<p class="muted small">No action recorded against this fault.</p>{% endif %}
+</div>
+{% else %}<p class="muted">No faults extracted.</p>{% endfor %}
+
+{% if orphan_actions %}
+<div class="fault" id="_none"><div><span class="sym muted">Actions without a fault</span></div>
+<table class="actions"><tbody>{% for a in orphan_actions %}<tr id="{{ a.action_id }}"><td><span class="idtag">{{ a.action_id }}</span></td><td>{{ a.action }}{{ cite(a.provenance, a.action_id) }}</td><td><span class="chip {{ outcome_group.get((a.outcome or {}).value or 'unknown','none') }}">{{ (a.outcome or {}).value or 'unknown' }}</span></td></tr>{% endfor %}</tbody></table></div>
+{% endif %}
+
+{% if rec.problems %}
+<h2 id="problems">Problems (root causes asserted in the mails)</h2>
+{% for p in rec.problems %}
+  <div class="panel" style="margin-bottom:.6rem" id="p-{{ p.problem_id }}"><span class="idtag">{{ p.problem_id }}</span> {{ p.statement }}{% if p.asserted_by %} <span class="muted small">· asserted by {{ p.asserted_by }}{% if p.concluded_at %} · {{ p.concluded_at | fmt_date }}{% endif %}</span>{% endif %}
+  · faults: {% for f in rec.faults if f.problem_id == p.problem_id %}<a href="#{{ f.fault_id }}">{{ f.fault_id }}</a>{{ ' ' }}{% else %}<span class="muted">none linked</span>{% endfor %}{{ flags_for(p.problem_id) }}
+  {{ cite(p.provenance, p.problem_id) }}</div>
+{% endfor %}
+{% endif %}
+
+<h2 id="evidence">Evidence</h2>
+<p class="muted small">Every quote above is verbatim from a cited mail or attachment (the validator checked). {{ mail_ids | length }} mails cited{% if mail_ids_missing %}, {{ mail_ids_missing | length }} not in the local cache{% endif %}; {{ shas | length }} attachment{{ 's' if shas | length != 1 }}.</p>
+<div class="cards">
+  <div class="panel"><h3 style="margin-top:0">Mails</h3>
+    {% for mid in mail_ids %}<div class="small">{% if mid in mails_available %}<a href="{{ root }}mail/{{ mid }}.html">{{ mail_subjects.get(mid) or mid }}</a> <span class="muted">{{ mail_dates.get(mid, '') }}</span>{% else %}<span class="mono muted">{{ mid }}</span> <span class="muted">(not cached)</span>{% endif %}</div>{% endfor %}
+  </div>
+  <div class="panel"><h3 style="margin-top:0">Attachments</h3>
+    {% for sha in shas %}<div class="small">{% if sha in attachments_available %}<a href="{{ root }}attachment/{{ sha }}.html">{{ attachment_names.get(sha) or sha[:16] }}</a> <span class="muted">{{ attachment_kinds.get(sha, '') }}</span>{% else %}<span class="mono muted">{{ sha[:16] }}…</span> <span class="muted">(digest not cached)</span>{% endif %}</div>{% else %}<span class="muted small">none cited</span>{% endfor %}
+  </div>
+</div>
+
+<h2 id="meta">Export metadata</h2>
+<div class="panel">
+  <dl class="kv">
+    <dt>Category</dt><dd>{{ rec.export_meta.category if rec.export_meta else '' }}</dd>
+    <dt>UICategory</dt><dd>{{ (rec.export_meta.UICategory if rec.export_meta else []) | join(', ') }} <span class="muted small">(hint, not a filter)</span></dd>
+    <dt>Tags</dt><dd>{{ (rec.export_meta.tags if rec.export_meta else []) | join(', ') }}</dd>
+    <dt>Status</dt><dd>{{ rec.export_meta.status if rec.export_meta else '' }}</dd>
+    <dt>Extraction</dt><dd><code>{{ rec.extraction_version }}</code>{% if rec.progress %} · {{ 'complete' if rec.progress.complete else 'paused at page ' ~ rec.progress.last_pagenum_processed }}{% endif %}</dd>
+    <dt>Validation</dt><dd>{% if rec.validation_flags %}{% for f in rec.validation_flags %}<code>{{ f }}</code>{{ ' ' }}{% endfor %}{% else %}<span class="muted">no flags</span>{% endif %}</dd>
+  </dl>
+  <details style="margin-top:.6rem"><summary>Raw record JSON</summary><pre class="json">{{ record_json }}</pre></details>
+</div>
+{% endblock %}

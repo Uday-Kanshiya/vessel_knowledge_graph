@@ -1,0 +1,16 @@
+{
+  "name": "extraction-10",
+  "description": "The 10-casefile extraction test set of docs/09-extraction-test-set.md (2026-09-30). Source export: casefiles_export_20260824_110543.json.",
+  "casefiles": [
+    {"casefile_id": "69c31dde585b6c770fc42db4", "label": "OASIS — HFO storage tank leak incident details (63 mails; many unrelated problems)"},
+    {"casefile_id": "69b38ef8481126094a0ee2f0", "label": "OASIS — Knocking sound from main engine exhaust valve (46 mails; recurring fault, maker thread)"},
+    {"casefile_id": "69be26a6235747eb320771f0", "label": "CAP SAN ARTEMISSIO — Crane incident damage assessment (87 mails; wrong vessel in header, class, claim)"},
+    {"casefile_id": "69a6965bf935cb9be885b8ee", "label": "KING ONE — Delivery assistance in Suez (218 mails; largest, logistics noise, Chinese mails)"},
+    {"casefile_id": "6a311cbc20960ff945871f60", "label": "PACIFIC PEARL — AE alarm activation (41 mails; sister vessels in thread, .addr files)"},
+    {"casefile_id": "6a364ba21fb51f367efb4fd0", "label": "CORAL PEARL — Hyper mist valve actuator malfunction (36 mails; long diagnostic chain, flag state)"},
+    {"casefile_id": "6a24407eb29c907dcf222c97", "label": "CAP SAN ARTEMISSIO — Technical forms May 2026 (21 mails; negative control)"},
+    {"casefile_id": "6a2dd03f84c786d6955ec42a", "label": "WHITE ALBA — SCR blow-off valve relay replacement (12 mails; compact guarantee claim)"},
+    {"casefile_id": "69ecb2a27863ec27f053cecb", "label": "MAERSK EL PALOMAR — Fuel pump overhaul (7 mails; fault found during planned maintenance)"},
+    {"casefile_id": "6a372fc706f7689c0eefde1d", "label": "KMARIN RESOLUTION — Main engine OMD sensor replacement (2 mails; minimal baseline)"}
+  ]
+}

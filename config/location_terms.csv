@@ -1,0 +1,15 @@
+term,canonical_location
+# Places a symptom wording can name (docs/13 §8, A1): WHERE the failure mode was seen, not a part and
+# not the equipment. A small closed list, a CSV column rather than a resolver kind until it needs
+# aliases (docs/15 §7). Matched like component_terms.csv; the match leaves the symptom key and is kept
+# as a string on the alias row (alias.parts.location). Seeded 2026-10-25 from the 10-record corpus.
+pump room,pump room
+engine room,engine room
+void space,void space
+steering flat,steering flat
+funnel,funnel
+bottom floor,bottom floor
+crankcase,crankcase
+sump,sump
+pump casing,pump casing
+sump level,sump

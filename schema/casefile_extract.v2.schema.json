@@ -1,0 +1,615 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://synergy.internal/schemas/casefile-extract.v2.json",
+  "title": "Casefile extract v2",
+  "description": "One record per casefile. Replaces casefile-extract v1: no per-mail records, no titles or summaries. The record is built incrementally - mails are fetched 5 at a time in pagenum order (window 6, stride 5), each window's mail bodies and content-bearing attachments are read, and equipment[], problems[], faults[] and action_logs[] are UPDATED in place (ids from earlier windows are never dropped or renumbered) until progress.complete is true. Every value is read from the fetched pages[].link bodies and attachment bytes, never from the export's summary fields. Mail digests and attachment digests live in their own collections; this record references them by mail_id / attachment_sha only.",
+  "type": "object",
+  "required": [
+    "casefile_id",
+    "imo",
+    "vessel_name",
+    "extraction_version",
+    "progress",
+    "problem_statement",
+    "export_meta",
+    "equipment",
+    "problems",
+    "faults",
+    "action_logs"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "casefile_id": {
+      "$ref": "#/$defs/oid",
+      "description": "MongoDB _id of the casefile; the identity of the record."
+    },
+    "imo": {
+      "type": "integer",
+      "description": "Vessel identity."
+    },
+    "vessel_name": {
+      "type": "string",
+      "description": "Audit only, and the stopword source for subject-stem normalisation. Never an identity."
+    },
+    "extraction_version": {
+      "type": "string",
+      "description": "Prompt+schema version that produced this record (03 §6). Bumped whenever either changes."
+    },
+    "progress": {
+      "type": "object",
+      "required": [
+        "last_pagenum_processed",
+        "complete"
+      ],
+      "additionalProperties": false,
+      "description": "Resume cursor for the windowed build. Not a statistic: it says where the next window starts.",
+      "properties": {
+        "last_pagenum_processed": {
+          "type": "integer",
+          "minimum": -1,
+          "description": "Highest pages[].pagenum whose mail and attachments have been folded in. -1 before the first window."
+        },
+        "complete": {
+          "type": "boolean",
+          "description": "True once every page of the casefile has been processed and consolidate has run."
+        }
+      }
+    },
+    "problem_statement": {
+      "type": "string",
+      "maxLength": 160,
+      "description": "ONE line, 10-15 words, the core problem of the casefile. Read from attachments (SOF, service/defect reports) where they exist. Written at consolidate, after the last window."
+    },
+    "export_meta": {
+      "type": "object",
+      "description": "Copied verbatim from the casefile export for audit and traceability. Never filter, group or extract on these.",
+      "additionalProperties": true,
+      "properties": {
+        "category": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "UICategory": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "casefile_link": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "equipment": {
+      "type": "array",
+      "description": "Every piece of equipment a fault or action refers to, once each. Maker/model/serial only if a document states them, else \"NA\". Never inferred from vessel class or sister ships.",
+      "items": {
+        "$ref": "#/$defs/equipment"
+      }
+    },
+    "problems": {
+      "type": "array",
+      "description": "Concluded causes, one row each, with their own p-ids. A fault links to at most one problem via faults[].problem_id; several faults may share one problem (one cause, symptoms on two cylinders). A problem exists only when a document CONCLUDES it; suspicions are not problems.",
+      "items": {
+        "$ref": "#/$defs/problem"
+      }
+    },
+    "faults": {
+      "type": "array",
+      "description": "The things being fixed: one row per (symptom, equipment[, problem]) triple. Every action points at exactly one fault. A casefile is not one case - KING ONE carries four. A symptom that returns after a resolved action or a stated gap is a NEW row linked by recurrence_of.",
+      "items": {
+        "$ref": "#/$defs/fault"
+      }
+    },
+    "action_logs": {
+      "type": "array",
+      "description": "One row per action occurrence, in seq order. Built window by window: a new action is appended with the mail that announced it; an outcome reported in a later window UPDATES the existing row (late binding) and never creates a new one. See docs/05.",
+      "items": {
+        "$ref": "#/$defs/action"
+      }
+    },
+    "validation_flags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Set by the deterministic validator (02 §2.4): dropped_object, unresolved_fault_id, quote_not_found, over_cap. Empty when clean."
+    },
+    "needs_review": {
+      "type": "boolean"
+    }
+  },
+  "$defs": {
+    "oid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{24}$"
+    },
+    "sha": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "shortId": {
+      "type": "string",
+      "pattern": "^[aefp][0-9]+$",
+      "description": "Short in-record id: e1.. equipment, p1.. problems, f1.. faults, a1.. actions. Assigned by the extractor in order of first appearance; stable across windows, never renumbered; the loader prefixes them with casefile_id for a global key."
+    },
+    "date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date",
+      "description": "YYYY-MM-DD as stated or clearly implied by the mail/document; null if not stated. Never estimated."
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "mail_ids",
+        "evidence_quote"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "mail_ids": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/oid"
+          },
+          "description": "Mails (pages[].referenceId) whose body or attachments state this."
+        },
+        "attachment_shas": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sha"
+          },
+          "description": "The attachment(s) the evidence_quote was copied from, when the source is a document rather than the mail body. One quote, the documents that state it — attachments that evidence a later update live in supporting[]."
+        },
+        "evidence_quote": {
+          "type": "string",
+          "description": "Verbatim text from the cited mail or document. The validator checks it occurs there. No quote, no assertion."
+        },
+        "supporting": {
+          "type": "array",
+          "description": "Evidence for later UPDATES to the row (an outcome, a maker/model, a concluded cause), one entry per update: its own mails, its own attachment, its own verbatim quote. Keeps the row's primary quote tied only to the documents that state it. Optional; validated like the primary quote.",
+          "items": {
+            "type": "object",
+            "required": [
+              "mail_ids",
+              "evidence_quote"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "mail_ids": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/oid"
+                }
+              },
+              "attachment_shas": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/sha"
+                }
+              },
+              "evidence_quote": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Which fields of the row this entry evidences (outcome, maker, problem_id, ...), or merged_from:<id> when it is the evidence of a row merged into this one."
+              }
+            }
+          }
+        }
+      }
+    },
+    "equipment": {
+      "type": "object",
+      "required": [
+        "equipment_id",
+        "name",
+        "equipment_type",
+        "maker",
+        "model",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "equipment_id": {
+          "$ref": "#/$defs/shortId"
+        },
+        "name": {
+          "type": "string",
+          "description": "As the documents call it, e.g. 'Starboard main engine'."
+        },
+        "equipment_type": {
+          "type": "string",
+          "description": "Free text type for the resolver: main_engine, auxiliary_engine, boiler, purifier, ..."
+        },
+        "position": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "stbd | port | No.2 | ... when the vessel has more than one."
+        },
+        "maker": {
+          "type": "string",
+          "description": "Stated in a document, else \"NA\"."
+        },
+        "model": {
+          "type": "string",
+          "description": "Stated in a document, else \"NA\"."
+        },
+        "serial": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "details": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Components, part numbers, running hours, software version as stated."
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      }
+    },
+    "fault": {
+      "type": "object",
+      "required": [
+        "fault_id",
+        "symptom",
+        "equipment_id",
+        "problem_id",
+        "first_observed_at",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "fault_id": {
+          "$ref": "#/$defs/shortId"
+        },
+        "symptom": {
+          "type": "string",
+          "description": "The failure mode as a short phrase (≤6 words: what is wrong, e.g. 'knocking sound', 'water leak', 'fails to start'); which unit / where goes in `position`; the full sentence as written goes in provenance.evidence_quote."
+        },
+        "alarms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Machine-generated alarm texts, verbatim, if any."
+        },
+        "equipment_id": {
+          "$ref": "#/$defs/shortId"
+        },
+        "position": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Where on the equipment: 'cyl 5', 'No.5 and No.6 exhaust bellows'."
+        },
+        "problem_id": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/shortId"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Link to problems[].problem_id once a document concludes the cause. null while undetermined - expected to be common. Filled in place on the existing fault; never a new fault."
+        },
+        "suspected_cause": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "A cause someone suspects but no document concludes ('C/E blames poor ME quality'). Never promoted to problem_id by the extractor."
+        },
+        "first_observed_at": {
+          "$ref": "#/$defs/date"
+        },
+        "recurrence_of": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/shortId"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "fault_id of the earlier fault this one is a RETURN of: the same symptom on the same equipment, reported again after an action on the earlier fault was stated as resolved or after a stated gap of normal operation. null for a first occurrence. Optional (additive in v2); a recurrence is its own row with its own dates, evidence and actions."
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      },
+      "description": "The (symptom, equipment) pair being fixed, linked to a problem row once one is concluded. Actions point here."
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "action_id",
+        "fault_id",
+        "seq",
+        "occurrence_no",
+        "action",
+        "kind",
+        "performed_by_role",
+        "date_performed",
+        "asserted_in_mail",
+        "date_reported",
+        "outcome",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "action_id": {
+          "$ref": "#/$defs/shortId"
+        },
+        "fault_id": {
+          "$ref": "#/$defs/shortId",
+          "description": "The fault this action was mainly taken against. One event is one row: other faults the same single event also serves are listed in also_fault_ids, not copied into rows of their own."
+        },
+        "also_fault_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/shortId"
+          },
+          "description": "Other faults the same single event also serves (one request to the maker covering two cylinders, one service attendance quoted for three pending issues). Optional; never contains fault_id. The loader fans the action out to these faults if it needs per-fault rows."
+        },
+        "seq": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Order within the casefile by date_performed, else date_reported. Assigned at consolidate."
+        },
+        "occurrence_no": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "1 the first time this action is taken on this fault; 2 if repeated."
+        },
+        "target": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Sub-location the action was applied to ('cyl 5', 'No.1 crosshead bearing'). Distinguishes a retry from the fault spreading."
+        },
+        "action": {
+          "type": "string",
+          "description": "What was done, one line, as the mail states it."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "corrective",
+            "diagnostic",
+            "preventive",
+            "administrative",
+            "commercial"
+          ]
+        },
+        "performed_by_role": {
+          "type": "string",
+          "enum": [
+            "vessel_crew",
+            "superintendent",
+            "oem",
+            "vendor",
+            "yard",
+            "agent",
+            "class",
+            "unknown"
+          ]
+        },
+        "advised_by_org": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Organisation whose instruction the action followed, if stated."
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Part names / numbers used, as stated."
+        },
+        "date_performed": {
+          "$ref": "#/$defs/date",
+          "description": "When the action was carried out, if stated."
+        },
+        "asserted_in_mail": {
+          "$ref": "#/$defs/oid",
+          "description": "The mail (or the mail carrying the document) that first announced the action."
+        },
+        "date_reported": {
+          "type": "string",
+          "format": "date-time",
+          "description": "That mail's date."
+        },
+        "outcome": {
+          "$ref": "#/$defs/outcome"
+        },
+        "finding": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Diagnostic actions only: what the test showed, as stated."
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "required": [
+        "value",
+        "verification",
+        "outcome_in_mail",
+        "outcome_date",
+        "evidence_quote"
+      ],
+      "additionalProperties": false,
+      "description": "What a mail STATES happened after the action. unknown is a value and the expected majority; a vague mail stays unknown. Corrective/preventive/administrative/commercial use resolved|partial|no_effect|made_worse|unknown; diagnostic uses conclusive|inconclusive|no_information|unknown.",
+      "properties": {
+        "value": {
+          "type": "string",
+          "enum": [
+            "resolved",
+            "partial",
+            "no_effect",
+            "made_worse",
+            "unknown",
+            "conclusive",
+            "inconclusive",
+            "no_information"
+          ]
+        },
+        "verification": {
+          "type": "string",
+          "enum": [
+            "confirmed_by_vessel",
+            "confirmed_by_oem",
+            "confirmed_by_vendor",
+            "reported_only",
+            "none"
+          ],
+          "description": "none only when value is unknown."
+        },
+        "outcome_in_mail": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/oid"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The mail that states the outcome. Usually later than asserted_in_mail. null when unknown."
+        },
+        "outcome_date": {
+          "$ref": "#/$defs/date",
+          "description": "When the outcome was observed, if stated; else that mail's date; null when unknown."
+        },
+        "evidence_quote": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Verbatim from outcome_in_mail. Required whenever value != unknown."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "value": {
+                "const": "unknown"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "verification": {
+                "const": "none"
+              },
+              "outcome_in_mail": {
+                "type": "null"
+              },
+              "evidence_quote": {
+                "type": "null"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "verification": {
+                "not": {
+                  "const": "none"
+                }
+              },
+              "outcome_in_mail": {
+                "$ref": "#/$defs/oid"
+              },
+              "evidence_quote": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      ]
+    },
+    "problem": {
+      "type": "object",
+      "required": [
+        "problem_id",
+        "statement",
+        "asserted_by",
+        "concluded_at",
+        "provenance"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "problem_id": {
+          "$ref": "#/$defs/shortId"
+        },
+        "statement": {
+          "type": "string",
+          "description": "The cause as the document states it: 'idler gear free-end bearing severely worn, thrust collars broken'."
+        },
+        "asserted_by": {
+          "type": "string",
+          "enum": [
+            "vessel",
+            "superintendent",
+            "oem",
+            "vendor",
+            "yard",
+            "class"
+          ],
+          "description": "Who concluded it. A suspicion does not create a problem row."
+        },
+        "concluded_at": {
+          "$ref": "#/$defs/date"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      }
+    }
+  }
+}

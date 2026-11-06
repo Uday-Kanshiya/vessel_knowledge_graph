@@ -1,0 +1,14 @@
+term,canonical
+# Condition words on an equipment / part name that say neither WHAT nor WHICH (docs/13 §3 step f):
+# "spare exhaust valve", "new idle gear", "damaged bearing". Removed from the key and kept on the alias row
+# (alias.parts.stripped.qualifier) so nothing is lost. Quantity words (pcs, set, x, ...) stay in
+# normalize.NOISE_WORDS. canonical is the form recorded (blank = the term). Seeded 2026-10-25 from the
+# former NOISE_WORDS condition words plus the obvious ones.
+new,new
+old,old
+spare,spare
+spares,spare
+replacement,replacement
+existing,existing
+damaged,damaged
+defective,defective

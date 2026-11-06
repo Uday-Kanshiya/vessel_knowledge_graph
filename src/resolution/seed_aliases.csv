@@ -1,0 +1,18 @@
+kind,raw_term,standard_key,status
+# Human-editable seed for the alias table (docs/13). Loaded by scripts/build_lookup.py before any,,
+# extraction output. Blank standard_key = normalize(raw_term).key. Rows here are status reviewed.,,
+equipment,Main engine,,reviewed
+equipment,M/E,main engine,reviewed
+equipment,ME,main engine,reviewed
+equipment,Auxiliary engine,,reviewed
+equipment,A/E,auxiliary engine,reviewed
+equipment,AE,auxiliary engine,reviewed
+equipment,Diesel generator,,reviewed
+equipment,D/G,diesel generator,reviewed
+equipment,Turbocharger,,reviewed
+equipment,T/C,turbocharger,reviewed
+equipment,Main engine cooling water pump,,reviewed
+equipment,M/E C.W. P/P,main engine cooling water pump,reviewed
+equipment,Exhaust gas cleaning system,,reviewed
+equipment,EGCS,exhaust gas cleaning system,reviewed
+equipment,Scrubber,exhaust gas cleaning system,reviewed

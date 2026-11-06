@@ -1,0 +1,19 @@
+{
+  "bar": 0.72,
+  "families_scanned": [
+    "alarm_or_trip",
+    "control_or_sensor_fault",
+    "leakage",
+    "performance_loss",
+    "smoke_or_exhaust",
+    "unclassified",
+    "wear_or_damage"
+  ],
+  "pairs": [],
+  "pending_pairs": [],
+  "counts": {
+    "MERGE-BY-TABLE": 0,
+    "REVIEW": 0,
+    "KEEP": 0
+  }
+}

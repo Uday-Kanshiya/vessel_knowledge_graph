@@ -1,0 +1,34 @@
+term,canonical
+# WHEN a symptom shows (docs/13 §8, P1b): the operating condition, extracted from the core like a location
+# and kept on the alias row (alias.parts.condition). Phrase terms match longest-first on lemmatised tokens
+# after a preposition (in | during | at | while | when | after | before | since | above | below) or bare.
+# A single word that is also a plain symptom word (dead, slow, hot, cold, high, low, full) is NEVER a row
+# on its own: "dead slow" is a condition, "battery dead" keeps dead in the core. "<n>" matches a number
+# and is carried into the canonical form.
+dead slow,dead slow
+dead slow ahead,dead slow
+slow ahead,slow ahead
+half ahead,half ahead
+full ahead,full ahead
+manoeuvring,manoeuvring
+maneuvering,manoeuvring
+approaching berth,approaching berth
+approach to berth,approaching berth
+departure,departure
+arrival,arrival
+after blackout,after blackout
+blackout,after blackout
+after restoration of power,after blackout
+during starting,during starting
+starting air,starting
+at sea,at sea
+in port,in port
+low load,low load
+high load,high load
+idling,idling
+above <n> rpm,above <n> rpm
+below <n> rpm,below <n> rpm
+at <n> rpm,at <n> rpm
+at <n> load,at <n> load
+above <n> load,above <n> load
+below <n> load,below <n> load

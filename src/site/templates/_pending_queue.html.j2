@@ -1,0 +1,25 @@
+{#- Queue 3: spellings the mint guard refused (docs/13 §4 case b'). Rendered inside admin/lookup.html
+    (in the "needs attention" details) and on admin/review.html. Expects `resolver` in context.
+    Rows carry data-pending-kind, NOT data-kind, so the kind toggles of the main queue (app.js) do
+    not count them. The copy button reuses the main queue's .copyfix handler. -#}
+{% set pc = resolver.pending_counts %}
+<h3 class="pending-title">Queued (not minted) · {{ pc.total }}
+  <span class="muted small">{% for k in ('equipment', 'part', 'symptom') %}{{ k }} {{ pc[k] }}{{ ' · ' if not loop.last }}{% endfor %}</span></h3>
+<p class="muted small">A spelling the mint guard refused to turn into a standard (<code>pending_term</code>, docs/13 §4): it stays <em>unresolved</em> on the site until a human promotes it (<em>copy fix</em> gives the seed-CSV row; fill in <code>&lt;standard_key&gt;</code>) or dismisses it (<code>LookupStore.dismiss</code>). Reasons: <code>undecomposed</code>, <code>needs_translation</code>, <code>contains_vessel</code>, <code>contains_position</code>, <code>contains_identifier</code>, <code>candidate_term</code>.</p>
+<table class="tbl pending">
+  <thead><tr><th>raw spelling</th><th>kind</th><th>reason</th><th class="n">hits</th><th>source</th><th>parts</th><th>casefiles</th><th></th></tr></thead>
+  <tbody>
+  {% for q in resolver.pending %}
+    <tr class="pending" data-pending-kind="{{ q.kind }}" data-fix="{{ q.fix_row }}">
+      <td class="canon">{{ q.raw }}</td>
+      <td><span class="chip kind">{{ q.kind }}</span></td>
+      <td><span class="chip flag">{{ q.reason }}</span></td>
+      <td class="n">{{ q.hits }}</td>
+      <td class="small mono muted">{{ q.source }}</td>
+      <td class="small mono">{{ q.parts_text }}</td>
+      <td class="small">{% for cid in q.casefiles %}<a href="{{ root }}casefile/{{ cid }}.html">{{ cid[:6] }}</a>{{ ', ' if not loop.last }}{% endfor %}</td>
+      <td><button type="button" class="copyfix small" data-fix="{{ q.fix_row }}" title="{{ q.fix_row }}">copy fix</button></td>
+    </tr>
+  {% else %}<tr><td class="muted" colspan="8">nothing queued</td></tr>{% endfor %}
+  </tbody>
+</table>

@@ -1,0 +1,8 @@
+kind,raw_term,standard_key,status,family_key
+# Human-reviewed symptom aliases (docs/13 §8). raw_term is a wording as extracted; standard_key is
+# its normalised key (blank = normalize_symptom(raw_term)); family_key must exist in
+# symptom_families.csv. A row here wins over anything the rules decide and is never re-derived.
+# Since A1 (docs/13 §8, 2026-10-25) a standard is the FAILURE MODE only: "Knocking sound from exhaust
+# valve" resolves to `knocking sound` by itself (component exhaust valve on the alias row), so it needs no
+# row and no link here. standard_key is the core of normalize.decompose_symptom(raw_term).
+symptom,Knocking sound from main engine,knocking sound,reviewed,abnormal_noise

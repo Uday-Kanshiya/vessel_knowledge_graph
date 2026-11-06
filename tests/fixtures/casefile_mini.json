@@ -1,0 +1,57 @@
+{
+  "exported_at": "2026-09-30T00:00:00+00:00",
+  "database": "fixture",
+  "collection": "casefiles",
+  "casefiles": [
+    {
+      "_id": {"$oid": "aaaaaaaaaaaaaaaaaaaaaaa1"},
+      "vesselName": "TEST VESSEL",
+      "imo": 1234567,
+      "category": "General",
+      "UICategory": ["defect"],
+      "casefile": "Main engine OMD sensor replacement process",
+      "status": "active",
+      "link": "https://example.invalid/casefile/aaaaaaaaaaaaaaaaaaaaaaa1",
+      "tag": ["defect", "maintenance"],
+      "summary": "LLM summary that must never be used",
+      "updatedAt": {"$date": "2026-06-21T05:13:47Z"},
+      "pages": [
+        {
+          "referenceId": {"$oid": "bbbbbbbbbbbbbbbbbbbbbbb2"},
+          "pagenum": 1,
+          "dateTime": {"$date": "2026-06-21T05:13:47Z"},
+          "senderEmailAddress": "super@office.example",
+          "senderName": "Superintendent",
+          "subject": "RE: Main engine OMD fault rectified",
+          "link": ["https://example.invalid/mail/bbbbbbbbbbbbbbbbbbbbbbb2.html"],
+          "attachments": ["https://example.invalid/att/AAA/image001.png", "https://example.invalid/att/AAA/OMD%20service%20note.pdf"],
+          "tags": ["defect"],
+          "summary": "LLM summary that must never be used"
+        },
+        {
+          "referenceId": {"$oid": "bbbbbbbbbbbbbbbbbbbbbbb1"},
+          "pagenum": 0,
+          "dateTime": {"$date": "2026-06-21T00:26:05Z"},
+          "senderEmailAddress": "cheng@vessel.example",
+          "senderName": "Chief Engineer",
+          "toRecipientsEmailAddresses": "super@office.example",
+          "subject": "Main engine OMD fault rectified",
+          "link": ["https://example.invalid/mail/bbbbbbbbbbbbbbbbbbbbbbb1.html"],
+          "attachments": [],
+          "tags": ["defect", "maintenance"]
+        },
+        {
+          "referenceId": {"$oid": "bbbbbbbbbbbbbbbbbbbbbbb3"},
+          "pagenum": 2,
+          "dateTime": {"$date": "2026-06-22T08:00:00Z"},
+          "senderEmailAddress": "cheng@vessel.example",
+          "senderName": "Chief Engineer",
+          "subject": "RE: Main engine OMD fault rectified",
+          "link": ["https://example.invalid/mail/bbbbbbbbbbbbbbbbbbbbbbb3.html"],
+          "attachments": [],
+          "tags": ["defect"]
+        }
+      ]
+    }
+  ]
+}

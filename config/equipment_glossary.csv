@@ -1,0 +1,43 @@
+source_term,lang,english,kind
+# Non-Latin equipment words a label may carry (docs/13 §3 step b). When a label has non-Latin script,
+# normalize.clean_equipment_label replaces these longest-first with the English, then the ordinary
+# abbreviation / position rules run on the result. kind: equipment | position | modifier (position and
+# modifier words come out as the English form the modifier table knows). "N号" is handled as "No.N" before
+# this table. Non-Latin text LEFT OVER goes to the adjudicator if one is injected, else the spelling is
+# queued (reason needs_translation) — a standard key never carries non-Latin characters.
+# Seeded 2026-10-25 with the zh terms the store has (KING ONE: 右主机 / 左主机) plus ja / ko equivalents.
+主机,zh,main engine,equipment
+辅机,zh,auxiliary engine,equipment
+发电机,zh,generator,equipment
+锅炉,zh,boiler,equipment
+泵,zh,pump,equipment
+压缩机,zh,compressor,equipment
+分油机,zh,purifier,equipment
+右舷,zh,starboard,position
+右,zh,starboard,position
+左舷,zh,port,position
+左,zh,port,position
+前,zh,forward,modifier
+后,zh,aft,modifier
+号,zh,No.,position
+主機,ja,main engine,equipment
+補機,ja,auxiliary engine,equipment
+発電機,ja,generator,equipment
+ボイラー,ja,boiler,equipment
+ポンプ,ja,pump,equipment
+圧縮機,ja,compressor,equipment
+清浄機,ja,purifier,equipment
+後,ja,aft,modifier
+주기관,ko,main engine,equipment
+보조기관,ko,auxiliary engine,equipment
+보기,ko,auxiliary engine,equipment
+발전기,ko,generator,equipment
+보일러,ko,boiler,equipment
+펌프,ko,pump,equipment
+압축기,ko,compressor,equipment
+청정기,ko,purifier,equipment
+우현,ko,starboard,position
+좌현,ko,port,position
+전방,ko,forward,modifier
+후방,ko,aft,modifier
+호,ko,No.,position

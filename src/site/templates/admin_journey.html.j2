@@ -1,0 +1,147 @@
+{% extends "base.html.j2" %}
+{% set rec = record %}
+{% block title %}Journey · {{ rec.vessel_name }} · {{ rec.problem_statement }}{% endblock %}
+{% block bodyattrs %} data-force-admin="1"{% endblock %}
+{% block content %}
+{% macro idlist(fam, ids) -%}{% for rid in ids %}<a class="idtag" href="{{ root }}casefile/{{ rec.casefile_id }}.html#{{ rid }}" title="{{ fam }}">{{ rid }}</a> {% endfor %}{%- endmacro %}
+<p class="small muted"><a href="{{ root }}index.html">Search</a> › <a href="{{ root }}casefile/{{ rec.casefile_id }}.html">{{ rec.vessel_name }} · {{ rec.problem_statement | truncate(70) }}</a> › journey</p>
+<h1>How this casefile became its page</h1>
+<div class="cf-meta">
+  <span class="mono">{{ rec.casefile_id }}</span>
+  <span><code>{{ rec.extraction_version }}</code></span>
+  <span>{{ j.steps | length }} window{{ 's' if j.steps | length != 1 }}</span>
+  {% if j.runs %}<span>{{ j.runs | length }} run{{ 's' if j.runs | length != 1 }}</span>{% endif %}
+  {% if j.needs_review %}<span class="chip warn">needs review</span>{% else %}<span class="chip good">clean</span>{% endif %}
+</div>
+{% if not j.steps %}<div class="banner warn">No window audit found for this casefile (<code>windows/wNNN.json</code> and <code>run_log.json</code> both absent). Re-run the extraction to get the journey.</div>{% endif %}
+{% if j.steps and not j.steps[0].has_detail %}<div class="banner warn">Summary view: <code>windows/*.json</code> is not in the run store, so this is rebuilt from <code>run_log.json</code> only (ids added / updated per window, no field-level detail).</div>{% endif %}
+
+<div class="stage"><h2>① Export → header</h2>
+<div class="panel"><dl class="kv">
+  <dt>problem_statement</dt><dd>{{ rec.problem_statement }} <span class="muted small">(export title, verbatim)</span></dd>
+  <dt>vessel / IMO</dt><dd>{{ rec.vessel_name }} / {{ rec.imo }}</dd>
+  <dt>UICategory · tags</dt><dd>{{ (rec.export_meta.UICategory if rec.export_meta else []) | join(', ') }} · {{ (rec.export_meta.tags if rec.export_meta else []) | join(', ') }}</dd>
+  {% for run in j.runs %}
+  <dt>run {{ loop.index }}</dt><dd>{{ run.started_at | fmt_date(true) }} → {{ run.finished_at | fmt_date(true) }} · {{ run.n_windows }} windows · {{ run.tokens.total_tokens | default(0) | fmt_int }} tokens in {{ run.tokens.call_count | default(0) }} calls
+    {% if run.attachments %} · attachments: {{ run.attachments.links }} links, {{ run.attachments.cache_hits }} cache hits, {{ run.attachments.fetched }} fetched, {{ run.attachments.digest_calls }} digest calls{% if run.attachments.ocr_pages %}, {{ run.attachments.ocr_pages }} OCR pages{% endif %}{% if run.attachments.fetch_errors %}, <span class="chip bad">{{ run.attachments.fetch_errors }} fetch errors</span>{% endif %}{% endif %}
+    {% if run.error %}<div class="chip bad">{{ run.error }}</div>{% endif %}
+    {% if run.mail_aliases %}<div class="small muted">twin mails shown once: {% for a, b in run.mail_aliases.items() %}<code>{{ a[:8] }}→{{ b[:8] }}</code> {% endfor %}</div>{% endif %}</dd>
+  {% endfor %}
+</dl></div></div>
+
+<div class="stage"><h2>② Window loop <span class="muted small">— 5 new mails per call; the record summary is the memory across windows</span></h2>
+<div class="panel">
+{% for s in j.steps %}
+  <div class="jrow" id="w{{ s.index }}">
+    <div class="w">w{{ '%03d' % s.index }}<small>pages {{ s.pagenums | min if s.pagenums else '?' }}–{{ s.pagenums | max if s.pagenums else '?' }}</small>{% if s.seconds %}<small>{{ s.seconds | round(0) | int }} s</small>{% endif %}</div>
+    <div class="what">
+      <div class="small muted">{{ s.mail_ids | length if s.mail_ids else s.pagenums | length }} mail{{ 's' if (s.mail_ids | length if s.mail_ids else s.pagenums | length) != 1 }}{% if s.n_attachments is not none %} · {{ s.n_attachments }} attachment link{{ 's' if s.n_attachments != 1 }}{% endif %}{% if s.prompt_chars %} · prompt {{ (s.prompt_chars / 1000) | round(0) | int }}k chars{% endif %}{% if s.attempts and s.attempts > 1 %} · {{ s.attempts }} attempts{% endif %}
+        {% if s.mail_ids %} · {% for mid in s.mail_ids %}{% if mid in mails_available %}<a class="mono" href="{{ root }}mail/{{ mid }}.html">{{ mid[-6:] }}</a>{% else %}<span class="mono">{{ mid[-6:] }}</span>{% endif %}{{ ' ' }}{% endfor %}{% endif %}</div>
+      {% if s.rejected %}<div class="rej">window rejected{% if s.error %}: {{ s.error }}{% endif %}</div>{% endif %}
+      <div class="delta">{% if s.n_added %}<strong>+</strong> {% for fam, ids in s.added.items() %}{{ idlist(fam, ids) }}{% endfor %}{% else %}<span class="muted">no new rows</span>{% endif %}</div>
+      {% if s.updates %}<div class="delta"><strong>↻</strong> {% for u in s.updates %}<span class="nowrap"><a class="idtag" href="{{ root }}casefile/{{ rec.casefile_id }}.html#{{ u.row_id }}">{{ u.row_id }}</a>{% if u.fields %}<span class="small muted">.{{ u.fields | join(', .') }}</span>{% endif %}</span> {% endfor %}</div>{% endif %}
+      {% if s.flags %}<div class="delta">{% for f in s.flags %}<span class="chip flag">{{ f }}</span>{% endfor %}</div>{% endif %}
+      {% if s.dropped_rows %}<div class="delta"><span class="chip bad">dropped rows: {{ s.dropped_rows | join(', ') }}</span></div>{% endif %}
+      {% if s.split_quotes or s.translated_quotes %}<div class="small muted">{% if s.split_quotes %}{{ s.split_quotes }} shared quote{{ 's' if s.split_quotes != 1 }} split · {% endif %}{% if s.translated_quotes %}{{ s.translated_quotes }} quote{{ 's' if s.translated_quotes != 1 }} translated{% endif %}</div>{% endif %}
+      {% if s.notes %}<div class="small muted">model note: “{{ s.notes }}”</div>{% endif %}
+      {% if s.has_detail %}
+      <details class="saw"><summary>what the model saw</summary>
+      {% set inp = s.inputs %}
+      {% if inp is none %}
+        <p class="small muted">inputs not captured — audit written by an earlier extraction run; re-run to get them</p>
+      {% else %}
+        <div class="saw-memory small">memory: <span class="mono">e {{ inp.memory.equipment }} · p {{ inp.memory.problems }} · f {{ inp.memory.faults }} · a {{ inp.memory.action_logs }}</span> rows the model could update
+          · next free ids <span class="mono">{% for fam, nid in inp.next_free_ids.items() %}{{ nid }}{{ ' ' if not loop.last }}{% endfor %}</span>
+          · prompt <code>{{ inp.prompt_version }}</code></div>
+        <table class="tbl saw-mails">
+          <thead><tr><th class="n">page</th><th>date</th><th>from</th><th>subject</th><th class="n">body chars</th><th>tags</th><th>mail</th></tr></thead>
+          <tbody>
+          {% for m in inp.mails %}
+            <tr{% if m.skipped_as_twin_of %} class="twin"{% endif %}>
+              <td class="n mono">{{ m.pagenum }}</td>
+              <td class="nowrap">{{ m.date | fmt_date(true) if m.date else '' }}</td>
+              <td class="small">{{ m.sender }}</td>
+              <td class="small">{{ m.subject }}</td>
+              <td class="n">{{ m.body_chars | fmt_int }}</td>
+              <td>{% if m.skipped_as_twin_of %}<span class="chip none" title="same body as mail {{ m.skipped_as_twin_of }}; not shown to the model again">twin of {{ m.skipped_as_twin_of[-6:] }}</span>{% endif %}{% if m.context_only %}<span class="chip kind">context only</span>{% endif %}{% if m.fetched_now %}<span class="chip kind">fetched now</span>{% endif %}{% if m.attachments %}<span class="chip kind">{{ m.attachments | length }} att</span>{% endif %}</td>
+              <td>{% if m.has_page %}<a class="mono" href="{{ root }}mail/{{ m.mail_id }}.html">{{ m.mail_id[-6:] }}</a>{% else %}<span class="mono muted" title="{{ m.mail_id }}">{{ m.mail_id[-6:] }}</span>{% endif %}</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+        {% if inp.n_attachments %}
+        <table class="tbl saw-atts">
+          <thead><tr><th>attachment</th><th>sha</th><th>status</th><th>read</th><th class="n">sent</th></tr></thead>
+          <tbody>
+          {% for m in inp.mails %}{% for a in m.attachments %}
+            <tr{% if a.sent_to_model and a.digest_summary %} title="{{ a.digest_summary }}"{% endif %}>
+              <td class="small">{{ a.name }} <span class="muted mono">p{{ m.pagenum }}</span></td>
+              <td class="mono">{% if a.sha256 %}{% if a.has_page %}<a href="{{ root }}attachment/{{ a.sha256 }}.html">{{ a.sha256[:8] }}</a>{% else %}<span title="{{ a.sha256 }}">{{ a.sha256[:8] }}</span>{% endif %}{% else %}—{% endif %}</td>
+              <td>{% if a.status == 'cache_hit' %}<span class="chip good">cache hit</span>{% elif a.status == 'fetched_digested' %}<span class="chip type">fetched + digested</span>{% elif a.status == 'junk_skipped' %}<span class="chip none">junk</span>{% elif a.status == 'fetch_error' %}<span class="chip bad" title="{{ a.error }}">fetch error</span>{% elif a.status == 'not_processed' %}<span class="chip none">not processed</span>{% else %}<span class="chip none">{{ a.status }}</span>{% endif %}</td>
+              <td class="small mono">{{ a.read_method or '' }}</td>
+              <td class="n">{% if a.sent_to_model %}✓{% else %}<span class="muted">–</span>{% endif %}</td>
+            </tr>
+          {% endfor %}{% endfor %}
+          </tbody>
+        </table>
+        {% endif %}
+        <div class="small saw-tokens">tokens <span class="mono">{{ inp.tokens.prompt_tokens | default(0) | fmt_int }} in / {{ inp.tokens.completion_tokens | default(0) | fmt_int }} out</span> in {{ inp.tokens.call_count | default(0) }} call{{ 's' if inp.tokens.call_count != 1 }}
+          · {{ inp.n_mails_sent }} of {{ inp.mails | length }} mail{{ 's' if inp.mails | length != 1 }} sent · {{ inp.n_attachments_sent }} of {{ inp.n_attachments }} attachment{{ 's' if inp.n_attachments != 1 }} sent
+          {% if inp.attempts | length > 1 %} · <span class="chip warn">{{ inp.attempts | length }} attempts</span>{% endif %}</div>
+        {% for c in inp.corrections %}<details class="saw-sub"><summary>correction sent before attempt {{ c.attempt }}</summary><pre class="saw-pre">{{ c.feedback }}</pre></details>{% endfor %}
+        {% if s.prompt_text %}<details class="saw-sub"><summary>raw prompt (attempt 1, {{ (s.prompt_text | length / 1000) | round(1) }}k chars)</summary><pre class="saw-pre">{{ s.prompt_text }}</pre></details>
+        {% else %}<p class="small muted">prompt text not stored (<code>wNNN.prompt.txt</code> missing)</p>{% endif %}
+        {% for a in inp.attempts %}<details class="saw-sub"><summary>raw response{% if inp.attempts | length > 1 %} · attempt {{ a.attempt }}{% endif %}{% if a.error %} · <span class="chip bad">rejected</span>{% endif %}</summary><pre class="saw-pre">{{ a.raw_response | tojson(indent=1) }}</pre>{% if a.error %}<p class="small rej">{{ a.error }}</p>{% endif %}</details>{% endfor %}
+      {% endif %}
+      </details>
+      {% endif %}
+    </div>
+  </div>
+{% endfor %}
+</div></div>
+
+<div class="stage"><h2>③ Consolidate</h2>
+<div class="panel">
+{% set c = j.consolidate %}
+{% if not c or not c.called %}<p class="muted">Consolidate was not called{% if c and c.error %}: {{ c.error }}{% endif %}.</p>{% else %}
+<dl class="kv">
+  <dt>duplicate actions merged</dt><dd>{% for m in c.merged or [] %}<div>{{ m if m is string else (m.keep ~ ' ← ' ~ (m.drop if m.drop is string else (m.drop or m.into or []) | join(', ')) ~ (' — ' ~ m.reason if m.reason else '')) }}</div>{% else %}<span class="muted">none</span>{% endfor %}</dd>
+  <dt>merges refused</dt><dd>{% for m in c.rejected_merges or [] %}<div class="small">{{ m if m is string else m | tojson }}</div>{% else %}<span class="muted">none</span>{% endfor %}</dd>
+  <dt>repeat groups</dt><dd>{% for g in c.repeat_groups or [] %}<div>{{ idlist('action', g.action_ids or []) }}<span class="small muted">{{ 'applied' if g.applied else 'not applied' }}{% if g.reason %} — {{ g.reason }}{% endif %}</span></div>{% else %}<span class="muted">none</span>{% endfor %}</dd>
+  <dt>fan-out collapsed</dt><dd>{% for g in c.fanout_collapsed or [] %}<div class="small">{{ g | tojson }}</div>{% else %}<span class="muted">none</span>{% endfor %}</dd>
+  {% if c.fault_pairs %}<dt>look-alike faults</dt><dd>{% for p in c.fault_pairs.candidates or [] %}<div>{{ idlist('fault', [p.a, p.b]) }}<span class="small muted">similarity {{ p.similarity }}{% if p.numbers_or_sides_differ %} · numbers/sides differ{% endif %}</span></div>{% else %}<span class="muted">no candidates</span>{% endfor %}
+    {% if c.fault_pairs.merged %}<div>merged: {{ c.fault_pairs.merged | tojson }}</div>{% endif %}{% if c.fault_pairs.recurrences %}<div>recurrences: {{ c.fault_pairs.recurrences | tojson }}</div>{% endif %}{% if c.fault_pairs.refused %}<div>refused: {{ c.fault_pairs.refused | tojson }}</div>{% endif %}</dd>{% endif %}
+  {% if c.notes %}<dt>notes</dt><dd>{{ c.notes }}</dd>{% endif %}
+  {% if c.tokens %}<dt>tokens</dt><dd>{{ c.tokens.total_tokens | fmt_int }}</dd>{% endif %}
+</dl>{% endif %}
+</div></div>
+
+<div class="stage"><h2>④ Validate</h2>
+<div class="panel">
+{% if j.validation_flags %}{% for f in j.validation_flags %}<div><span class="chip flag">{{ f.kind }}</span> {% if f.row_id %}<a class="idtag" href="{{ root }}casefile/{{ rec.casefile_id }}.html#{{ f.row_id }}">{{ f.row_id }}{% if f.field %}.{{ f.field }}{% endif %}</a>{% endif %} <span class="small muted">{{ f.extra or '' }}</span></div>{% endfor %}
+<p class="small muted" style="margin-top:.5rem">→ <code>needs_review = {{ j.needs_review | lower }}</code></p>
+{% else %}<p>No flags. <code>needs_review = false</code>.</p>{% endif %}
+{% if j.postprocess and j.postprocess.shas_pruned %}<p class="small muted">attachment shas pruned (uncited): {{ j.postprocess.shas_pruned | length }}</p>{% endif %}
+</div></div>
+
+<div class="stage"><h2>⑤ Store</h2>
+<div class="panel small">
+  <code>data/extractions/{{ rec.casefile_id }}/record.json</code> → packaged as <code>{{ packaged_name }}</code> → rendered as <a href="{{ root }}casefile/{{ rec.casefile_id }}.html">casefile/{{ rec.casefile_id }}.html</a>
+</div></div>
+
+<div class="stage"><h2>Row lineage <span class="muted small">— pick a row: which window minted it, which touched it, what the validator said</span></h2>
+<div class="panel">
+<table class="tbl lineage">
+  <thead><tr><th>row</th><th>what</th><th>minted</th><th>touched</th><th>flags</th></tr></thead>
+  <tbody>
+  {% for rid, l in j.lineage.items() %}
+    <tr id="lin-{{ rid }}"><td class="id"><a href="{{ root }}casefile/{{ rec.casefile_id }}.html#{{ rid }}">{{ rid }}</a></td>
+      <td>{{ l.label | truncate(90) }}</td>
+      <td>{% if l.minted is not none %}<a href="#w{{ l.minted }}">w{{ '%03d' % l.minted }}</a>{% else %}<span class="muted" title="not in any window's added list — came from consolidate or a run without audit">—</span>{% endif %}</td>
+      <td class="small">{% for t in l.touched %}<span class="nowrap"><a href="#w{{ t.window }}">w{{ '%03d' % t.window }}</a>{% if t.fields %} <span class="muted">.{{ t.fields | join(' .') }}</span>{% endif %}</span>{{ ' · ' if not loop.last }}{% else %}<span class="muted">—</span>{% endfor %}</td>
+      <td>{% for f in l.flags %}<span class="chip flag" title="{{ f.raw }}">{{ f.kind }}{% if f.field %}.{{ f.field }}{% endif %}</span>{% endfor %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div></div>
+{% endblock %}

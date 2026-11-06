@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://synergy.internal/schemas/attachment-digest.v1.json",
+  "title": "Attachment digest v1 (vessel_issues_mail_attachments)",
+  "description": "One document per DISTINCT FILE, keyed by the SHA-256 of the fetched bytes. The same file arriving on several mails (or several casefiles) is one document with several links[]. This is the store that provenance.attachment_shas in the casefile extract (casefile_extract.v2) points at: every sha cited there must exist here, with a link on one of the cited mails. Digest fields are read from the file itself (PDF text / OCR / vision for scans, docx and xlsx text, .eml body) and never from the mail that carried it. Non content-bearing files (signature logos, banners) still get a document - with content_bearing false and no digest - so the junk decision is recorded once and never re-made.",
+  "type": "object",
+  "required": [
+    "sha256",
+    "links",
+    "content_bearing",
+    "kind_of_doc",
+    "summary",
+    "tags",
+    "maker",
+    "model",
+    "equipment_details",
+    "extracted_text",
+    "text_ref",
+    "extraction_method"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "SHA-256 of the fetched bytes. The identity; unique index."
+    },
+    "links": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Every place this file appeared. One entry per (mail, url); appended when the same sha is seen again, never duplicated.",
+      "items": {
+        "type": "object",
+        "required": ["mailbodyId", "casefileId", "attachment_url", "attachment_name"],
+        "additionalProperties": false,
+        "properties": {
+          "mailbodyId": { "$ref": "#/$defs/oid", "description": "pages[].referenceId of the mail that carried it." },
+          "casefileId": { "$ref": "#/$defs/oid" },
+          "attachment_url": { "type": "string", "format": "uri", "description": "pages[].attachments[] entry, as exported." },
+          "attachment_name": { "type": "string", "description": "URL-decoded file name as it appeared on that mail." }
+        }
+      }
+    },
+    "content_bearing": {
+      "type": "boolean",
+      "description": "False for files with no case content: signature logos, banners, decorative images, calendar/contact files. When false, summary is null and maker/model/equipment_details are \"NA\"."
+    },
+    "kind_of_doc": {
+      "type": "string",
+      "description": "Document class, e.g. 'Service report', 'Statement of Facts (SOF)', 'Defect report (C/E)', 'Invoice', 'Air waybill', 'Email signature / logo image', 'Identity document - passport', 'Telemetry dump / archive (not opened)'."
+    },
+    "summary": {
+      "type": ["string", "null"],
+      "description": "What the document contains, 1-3 sentences, from the file itself. null when not content-bearing. Identity documents: classify only, never summarise numbers."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Closed list, from config (e.g. service_report, sof, defect_report, quotation, invoice, logistics, running_in_procedure, drawing, photo_report). Not free text."
+    },
+    "maker": { "type": "string", "description": "Equipment maker stated in THIS document, else \"NA\". Never inferred." },
+    "model": { "type": "string", "description": "Equipment model/type stated in THIS document, else \"NA\"." },
+    "equipment_details": { "type": "string", "description": "Equipment, components, part numbers, running hours, failure detail stated in THIS document, else \"NA\"." },
+    "extracted_text": {
+      "type": ["string", "null"],
+      "description": "The text the digest was read from (PDF text layer, OCR output, docx/xlsx text, .eml body), inline when small. The validator matches evidence_quote against it. null when text_ref is used or the file has no text (image, archive)."
+    },
+    "text_ref": {
+      "type": ["string", "null"],
+      "description": "Pointer to the extracted text when it is too large to inline (object-store key). Exactly one of extracted_text / text_ref is non-null for a content-bearing text document."
+    },
+    "extraction_method": {
+      "type": "string",
+      "enum": ["pdf_text", "pdf_ocr", "vision", "docx_text", "xlsx_table", "eml_parse", "listed_only", "skipped"],
+      "description": "How the digest was produced. listed_only for archives/dumps (name and member list recorded, not opened); skipped for non content-bearing files."
+    }
+  },
+  "$defs": {
+    "oid": { "type": "string", "pattern": "^[0-9a-f]{24}$" }
+  }
+}

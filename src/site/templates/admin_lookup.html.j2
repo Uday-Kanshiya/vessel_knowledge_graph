@@ -1,0 +1,115 @@
+{% extends "base.html.j2" %}
+{% block title %}Lookup tables · admin{% endblock %}
+{% block bodyattrs %} data-force-admin="1"{% endblock %}
+{% block content %}
+{% macro cflinks(ids) -%}{% for cid in ids %}<a href="{{ root }}casefile/{{ cid }}.html" title="{{ titles.get(cid, cid) }}">{{ vessels.get(cid, cid[:6]) }}</a>{{ ', ' if not loop.last }}{% endfor %}{%- endmacro %}
+<h1>Lookup tables</h1>
+{% if resolver %}
+<p class="muted small">Read from the <strong>resolver</strong> (<code>data/resolution/lookup.sqlite</code>, docs/13): raw spelling → standard (display name is a view, never stored) → family. The facets on the search page list these ids, never wording (12 §3). Editing is CSV + <code>scripts/build_lookup.py</code>; each queue row below gives the CSV line that fixes it. Built from the {{ n_casefiles }} records' spellings.</p>
+
+{% set qc = resolver.queue_counts %}
+<details class="queue"{% if qc.total <= 10 %} open{% endif %}>
+  <summary>Needs attention · {{ qc.unreviewed }} unreviewed · {{ qc.no_family }} without family · {{ resolver.pending_counts.total }} queued
+    <span class="kindfilter">{% for k in ('equipment', 'part', 'symptom') %}<button type="button" class="chip kind" data-kind="{{ k }}" aria-pressed="true" title="show / hide {{ k }} rows">{{ k }} {{ resolver.queue_by_kind[k] }}</button>{% endfor %}</span></summary>
+  <p class="muted small">One row per standard that needs a human: <span class="chip warn">unreviewed</span> = minted by the rules, approve / merge / pin a spelling; <span class="chip flag">no family</span> = a symptom the Symptom facet shows as <em>unclassified</em>. <em>copy fix</em> puts the CSV row (<code>kind,raw_term,standard_key,family_key</code>) on the clipboard for <code>config/seed_symptom_aliases.csv</code> or <code>src/resolution/seed_aliases.csv</code>; then re-run <code>scripts/build_lookup.py</code>.</p>
+  <table class="tbl queue">
+    <thead><tr><th>standard</th><th>kind</th><th class="n">hits</th><th>spellings</th><th>reason</th><th></th></tr></thead>
+    <tbody>
+    {% for q in resolver.queue %}
+      <tr data-kind="{{ q.kind }}" data-fix="{{ q.fix_row }}"{% if loop.index > 10 %} hidden{% endif %}>
+        <td class="canon">{{ q.display }} <span class="muted small mono">#{{ q.id }}</span></td>
+        <td><span class="chip kind">{{ q.kind }}</span></td>
+        <td class="n">{{ q.hits }}</td>
+        <td class="small">{{ q.aliases[:3] | join(' | ') }}{% if q.aliases | length > 3 %} <span class="muted">+{{ q.aliases | length - 3 }}</span>{% endif %}</td>
+        <td>{% for r in q.reasons %}{% if r == 'unreviewed' %}<span class="chip warn">unreviewed</span>{% else %}<span class="chip flag">no family</span>{% endif %}{% endfor %}</td>
+        <td><button type="button" class="copyfix small" data-fix="{{ q.fix_row }}" title="{{ q.fix_row }}">copy fix</button></td>
+      </tr>
+    {% else %}<tr><td class="muted" colspan="6">nothing needs attention</td></tr>{% endfor %}
+    </tbody>
+  </table>
+  {% if qc.total > 10 %}<p class="small muted queue-more">showing <span data-shown>10</span> of {{ qc.total }} · <a href="#" data-action="show-all">show all</a></p>{% endif %}
+  {% include "_pending_queue.html.j2" %}
+</details>
+
+<h2>Equipment — <code>equipment_type</code> → standard → raw spellings</h2>
+<div class="panel">
+<table class="tbl">
+  <thead><tr><th>equipment_type</th><th>standard (display)</th><th class="n">hits</th><th>raw spellings (hits · method)</th><th>casefiles</th></tr></thead>
+  <tbody>
+  {% for g in resolver.equipment %}{% for s in g.standards %}
+    <tr>{% if loop.first %}<td class="canon" rowspan="{{ g.n_standards }}">{{ g.type }}</td>{% endif %}
+      <td><strong>{{ s.display }}</strong> <span class="muted small mono">#{{ s.id }}</span>{% if s.status == 'auto' %} <span class="chip warn">auto</span>{% endif %}</td>
+      <td class="n">{{ s.hits }}</td>
+      <td class="variants">{% for a in s.aliases %}<span{% if a.stripped %} title="{{ a.stripped }}"{% endif %}>{{ a.raw }} <span class="n">({{ a.hits }} · {{ a.method }})</span>{% if a.chain != a.method %} <span class="chain small muted mono">{{ a.chain }}</span>{% endif %}{% if a.stripped %} <span class="stripped small muted">− {{ a.stripped }}</span>{% endif %}</span>{% endfor %}</td>
+      <td class="small">{{ cflinks(s.casefiles) }}</td></tr>
+  {% endfor %}{% endfor %}
+  </tbody>
+</table>
+<p class="muted small">Each spelling shows its cleaning <span class="mono">chain</span> (the steps that changed the text before the key was taken, docs/13 §3: vessel_strip · glossary · record_strip · qualifier · position · abbreviations) and, after −, what each step removed. The record keeps those values as fields; the name only loses them.</p>
+</div>
+
+<h2>Symptoms — family → standard → raw spellings <span class="muted small">({{ resolver.n_families_used }} of {{ resolver.families | length }} families used)</span></h2>
+<p class="muted small">A family is the bounded layer the Symptom facet lists (<code>config/symptom_families.csv</code>, {{ resolver.families | length }} rows, edited by hand). The <em>method</em> says why a standard sits in its family: <code>human</code> / <code>seed</code> from a CSV row, <code>inherited</code> from the nearest broader term with a family (<code>config/symptom_links.json</code>), <code>rule</code> from the family's keyword patterns, <code>none</code> = unclassified. Standards are not merged; each keeps its own spellings and counts. A standard is the <em>failure mode</em> only (docs/13 §8): <em>on / when</em> lists the component (a <code>part</code> standard) · location · modifier · condition · frequency its spellings named, with counts.</p>
+<div class="panel">
+<table class="tbl">
+  <thead><tr><th>family</th><th>standard (display)</th><th>method</th><th class="n">hits</th><th>on / when</th><th>raw spellings (hits · method)</th><th>casefiles</th></tr></thead>
+  <tbody>
+  {% for g in resolver.symptoms %}{% if g.n_standards %}{% for s in g.standards %}
+    <tr{% if g.pseudo %} class="pseudo"{% endif %}>{% if loop.first %}<td class="canon" rowspan="{{ g.n_standards }}" title="{{ g.description or '' }}{% if g.patterns %} · patterns: {{ g.patterns | join(' | ') }}{% endif %}">{{ g.display }}<br><span class="muted small mono">{{ g.key }}</span></td>{% endif %}
+      <td><strong>{{ s.display }}</strong> <span class="muted small mono">#{{ s.id }}</span>{% if s.status == 'auto' %} <span class="chip warn">auto</span>{% endif %}</td>
+      <td><span class="chip kind">{{ s.family_method }}</span></td>
+      <td class="n">{{ s.hits }}</td>
+      <td class="variants on">{% for o in s.on %}<span>{% set parts = [] %}{% if o.component %}{% set _ = parts.append(o.component) %}{% endif %}{% if o.location %}{% set _ = parts.append('in ' ~ o.location) %}{% endif %}{% if o.modifiers %}{% set _ = parts.append(o.modifiers) %}{% endif %}{% if o.condition %}{% set _ = parts.append('when ' ~ o.condition) %}{% endif %}{% if o.frequency %}{% set _ = parts.append(o.frequency) %}{% endif %}{{ parts | join(' · ') }} <span class="n">({{ o.n }})</span></span>{% else %}<span class="muted">—</span>{% endfor %}</td>
+      <td class="variants">{% for a in s.aliases %}<span>{{ a.raw }} <span class="n">({{ a.hits }} · {{ a.method }})</span></span>{% endfor %}</td>
+      <td class="small">{{ cflinks(s.casefiles) }}</td></tr>
+  {% endfor %}{% endif %}{% endfor %}
+  </tbody>
+</table>
+<p class="muted small">Families with no standard yet: {% for g in resolver.symptoms if not g.pseudo and not g.n_standards %}<code>{{ g.key }}</code>{{ ' ' }}{% else %}none{% endfor %}</p>
+</div>
+{% else %}
+<p class="muted small">Raw wording → the one canonical layer the records carry today (<code>equipment_type</code>). Derived from the {{ n_casefiles }} records at build time because the resolver DB was not available (<code>--no-lookup</code>, or run <code>scripts/build_lookup.py</code>). With the resolver this page reads its standards, families and review queues instead (12 §5.1).</p>
+
+<h2>Equipment — raw <code>equipment[].name</code> by <code>equipment_type</code></h2>
+<div class="panel">
+<table class="tbl">
+  <thead><tr><th>equipment_type (canonical)</th><th>raw names seen</th><th class="n">variants</th><th>maker / model seen</th></tr></thead>
+  <tbody>
+  {% for row in lookup.equipment %}
+    <tr><td class="canon">{{ row.type }}</td>
+      <td class="variants">{% for v in row.variants %}<span><strong>{{ v.name }}</strong> <span class="n">({{ v.count }}: {{ cflinks(v.casefiles) }})</span></span>{% endfor %}</td>
+      <td class="n">{{ row.n_variants }}</td>
+      <td class="small">{% for v in row.variants %}{% for m in v.makers %}<span class="chip kind">{{ m }}</span>{% endfor %}{% endfor %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+
+<h2>Symptoms — normalised wording groups <span class="muted small">(lowercase, strip position tokens and equipment-type words)</span></h2>
+<p class="muted small">A group means <em>same kind of symptom</em>, not same fault: each raw wording below is its own fault row on its casefile, with its own position (shown) and its own actions. Rows marked <span class="chip kind">⊂ broader</span> are narrower groups listed under their broader group, from the reviewed links in <code>config/symptom_links.json</code> ({{ n_symptom_links }} active{% if symptom_link_warnings %}, {{ symptom_link_warnings | length }} dropped{% endif %}). Groups are not merged and each keeps its own counts.</p>
+{% if symptom_link_warnings %}<ul class="small">{% for w in symptom_link_warnings %}<li class="muted">{{ w }}</li>{% endfor %}</ul>{% endif %}
+<div class="panel">
+<table class="tbl">
+  <thead><tr><th>normalised</th><th>raw symptom wordings</th><th class="n">raw</th><th class="n">faults</th><th>link note</th></tr></thead>
+  <tbody>
+  {% for s in lookup.symptoms %}
+    <tr{% if s.depth %} class="narrower"{% endif %}><td class="canon"{% if s.depth %} style="padding-left: {{ 1 + s.depth * 1.4 }}rem"{% endif %}>{% if s.depth %}<span class="muted">└ </span>{% endif %}{{ s.norm }}{% if s.broader %} <span class="chip kind" title="narrower than {{ s.broader }}">⊂ {{ s.broader }}</span>{% endif %}{% if s.n_narrower %} <span class="chip kind" title="{{ s.n_narrower }} narrower group(s) below">⊃ {{ s.n_narrower }}</span>{% endif %}</td>
+      <td class="variants">{% for r in s.raws %}<span>{{ r.raw }}{% if r.positions %} <span class="chip kind">{{ r.positions | join(', ') }}</span>{% endif %} <span class="n">({{ cflinks(r.casefiles) }})</span></span>{% endfor %}</td>
+      <td class="n">{{ s.n_raw }}</td><td class="n">{{ s.total }}</td>
+      <td class="small">{% if s.note %}{{ s.note }}{% if s.reviewed_by or s.date %} <span class="muted">({{ s.reviewed_by }}{% if s.date %}, {{ s.date }}{% endif %})</span>{% endif %}{% endif %}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endif %}
+
+<div class="cards" style="margin-top:1rem">
+  <div class="panel"><h3 style="margin-top:0">Parts (raw{% if resolver %}; standards exist, no family layer yet{% else %}, no canonical yet{% endif %})</h3>
+    <table class="tbl"><tbody>{% for p in lookup.parts %}<tr><td>{{ p.name }}</td><td class="n">{{ p.count }}</td><td class="small">{{ cflinks(p.casefiles) }}</td></tr>{% else %}<tr><td class="muted">none</td></tr>{% endfor %}</tbody></table></div>
+  <div class="panel"><h3 style="margin-top:0">Performed-by roles (schema enum)</h3>
+    <table class="tbl"><tbody>{% for r, n in lookup.roles %}<tr><td class="canon">{{ r }}</td><td class="n">{{ n }}</td></tr>{% endfor %}</tbody></table></div>
+  <div class="panel"><h3 style="margin-top:0">Advising organisations (raw)</h3>
+    <table class="tbl"><tbody>{% for o in lookup.orgs %}<tr><td>{{ o.name }}</td><td class="n">{{ o.count }}</td><td class="small">{{ cflinks(o.casefiles) }}</td></tr>{% else %}<tr><td class="muted">none</td></tr>{% endfor %}</tbody></table></div>
+</div>
+{% endblock %}
+{% block scripts %}{% if resolver %}<script src="{{ root }}assets/app.js"></script>{% endif %}{% endblock %}

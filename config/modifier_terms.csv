@@ -1,0 +1,20 @@
+term,canonical
+# Position / side modifiers shared by every resolver kind (docs/13 §3, docs/15 §7). A token in `term`
+# says WHICH unit, not WHAT it is: it leaves the standard key and comes back as Resolution.position in
+# its `canonical` form. Marine convention facing forward: left -> port, right -> starboard. Loaded by
+# LookupStore(config_dir=...) through normalize.load_config(); the header must be exactly term,canonical.
+port,port
+stbd,starboard
+starboard,starboard
+left,port
+right,starboard
+fwd,forward
+forward,forward
+fore,forward
+aft,aft
+upper,upper
+lower,lower
+inner,inner
+outer,outer
+centre,centre
+center,centre

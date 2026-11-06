@@ -1,0 +1,4 @@
+possible duplicates (lexical >= 0.72; verdicts: MERGE-BY-TABLE / REVIEW / KEEP)
+  families scanned: alarm_or_trip, leakage, performance_loss, smoke_or_exhaust, unclassified, wear_or_damage
+  pairs: {'MERGE-BY-TABLE': 0, 'REVIEW': 0, 'KEEP': 0}
+  none
